@@ -9,19 +9,19 @@
 
     <!-- Glowing Node Gradients -->
     <radialGradient id="indigoGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.25" />
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.5" />
       <stop offset="100%" stop-color="#6366F1" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="purpleGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.25" />
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.5" />
       <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="tealGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.25" />
+      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.5" />
       <stop offset="100%" stop-color="#14b8a6" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="roseGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.25" />
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.5" />
       <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
     </radialGradient>
 
@@ -39,11 +39,7 @@
     }
     .flow-line {
       stroke-dasharray: 8, 8;
-      animation: dash 30s linear infinite;
-    }
-    .pulse-node {
-      animation: scaleNode 3s infinite ease-in-out;
-      transform-origin: center;
+      animation: dash 35s linear infinite;
     }
     .signal {
       animation: travel 4s infinite linear;
@@ -56,11 +52,7 @@
     }
     @keyframes pulseGlow {
       0%, 100% { opacity: 0.3; }
-      50% { opacity: 0.8; }
-    }
-    @keyframes scaleNode {
-      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 4px rgba(99, 102, 241, 0.2)); }
-      50% { transform: scale(1.03); filter: drop-shadow(0 0 12px rgba(99, 102, 241, 0.6)); }
+      50% { opacity: 0.95; }
     }
     @keyframes travel {
       0% { offset-distance: 0%; opacity: 0; }
@@ -71,28 +63,28 @@
 
     /* Node-specific positions for paths (used for signals) */
     .signal-router-rag {
-      offset-path: path('M 210,140 L 375,70');
+      offset-path: path('M 182,140 L 420,70');
     }
     .signal-router-sql {
-      offset-path: path('M 210,140 L 375,210');
+      offset-path: path('M 182,140 L 420,210');
     }
     .signal-rag-merge {
-      offset-path: path('M 465,70 L 610,140');
+      offset-path: path('M 420,70 L 638,140');
     }
     .signal-sql-merge {
-      offset-path: path('M 465,210 L 610,140');
+      offset-path: path('M 420,210 L 638,140');
     }
     .signal-input-router {
-      offset-path: path('M 45,140 L 155,140');
+      offset-path: path('M 45,140 L 182,140');
     }
     .signal-merge-output {
-      offset-path: path('M 665,140 L 755,140');
+      offset-path: path('M 638,140 L 755,140');
     }
 
     /* Typography */
     .node-text {
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
-      font-size: 11px;
+      font-size: 10px;
       font-weight: bold;
       fill: #f1f5f9;
       text-anchor: middle;
@@ -117,28 +109,28 @@
   <!-- Connection Lines (Dashed Paths) -->
   <g fill="none" stroke-width="2">
     <!-- Input to Router -->
-    <path d="M 45,140 L 155,140" stroke="#6366F1" opacity="0.3" />
-    <path d="M 45,140 L 155,140" stroke="#6366F1" class="flow-line" opacity="0.7" />
+    <path d="M 45,140 L 182,140" stroke="#6366F1" opacity="0.3" />
+    <path d="M 45,140 L 182,140" stroke="#6366F1" class="flow-line" opacity="0.7" />
 
     <!-- Router to RAG (Top) -->
-    <path d="M 210,140 L 375,70" stroke="#a855f7" opacity="0.3" />
-    <path d="M 210,140 L 375,70" stroke="#a855f7" class="flow-line" opacity="0.7" />
+    <path d="M 182,140 L 420,70" stroke="#a855f7" opacity="0.3" />
+    <path d="M 182,140 L 420,70" stroke="#a855f7" class="flow-line" opacity="0.7" />
 
     <!-- Router to SQL (Bottom) -->
-    <path d="M 210,140 L 375,210" stroke="#14b8a6" opacity="0.3" />
-    <path d="M 210,140 L 375,210" stroke="#14b8a6" class="flow-line" opacity="0.7" />
+    <path d="M 182,140 L 420,210" stroke="#14b8a6" opacity="0.3" />
+    <path d="M 182,140 L 420,210" stroke="#14b8a6" class="flow-line" opacity="0.7" />
 
     <!-- RAG to Merge -->
-    <path d="M 465,70 L 610,140" stroke="#a855f7" opacity="0.3" />
-    <path d="M 465,70 L 610,140" stroke="#a855f7" class="flow-line" opacity="0.7" />
+    <path d="M 420,70 L 638,140" stroke="#a855f7" opacity="0.3" />
+    <path d="M 420,70 L 638,140" stroke="#a855f7" class="flow-line" opacity="0.7" />
 
     <!-- SQL to Merge -->
-    <path d="M 465,210 L 610,140" stroke="#14b8a6" opacity="0.3" />
-    <path d="M 465,210 L 610,140" stroke="#14b8a6" class="flow-line" opacity="0.7" />
+    <path d="M 420,210 L 638,140" stroke="#14b8a6" opacity="0.3" />
+    <path d="M 420,210 L 638,140" stroke="#14b8a6" class="flow-line" opacity="0.7" />
 
     <!-- Merge to Output -->
-    <path d="M 665,140 L 755,140" stroke="#f43f5e" opacity="0.3" />
-    <path d="M 665,140 L 755,140" stroke="#f43f5e" class="flow-line" opacity="0.7" />
+    <path d="M 638,140 L 755,140" stroke="#f43f5e" opacity="0.3" />
+    <path d="M 638,140 L 755,140" stroke="#f43f5e" class="flow-line" opacity="0.7" />
   </g>
 
   <!-- Glowing Signals (Animated Nodes traveling paths) -->
@@ -153,41 +145,41 @@
 
   <!-- NODE 0: Query Source -->
   <g transform="translate(45, 140)">
-    <circle r="30" fill="url(#indigoGlow)" class="glow-circle" />
+    <circle r="36" fill="url(#indigoGlow)" class="glow-circle" />
     <circle r="20" fill="#0f172a" stroke="url(#borderGrad)" stroke-width="1.5" />
     <text y="-2" class="node-text">INPUT</text>
     <text y="8" class="sub-text">User Query</text>
   </g>
 
   <!-- NODE 1: Router Node -->
-  <g transform="translate(182, 140)" class="pulse-node">
-    <circle r="40" fill="url(#indigoGlow)" class="glow-circle" />
+  <g transform="translate(182, 140)">
+    <circle r="46" fill="url(#indigoGlow)" class="glow-circle" />
     <circle r="28" fill="#0f172a" stroke="#6366F1" stroke-width="2" />
     <text y="-2" class="node-text">ROUTER</text>
-    <text y="8" class="sub-text">Intent Classifier</text>
+    <text y="8" class="sub-text">Classifier</text>
   </g>
 
   <!-- NODE 2: RAG Retrieval Node (Top) -->
-  <g transform="translate(420, 70)" class="pulse-node" style="animation-delay: 0.5s;">
-    <circle r="45" fill="url(#purpleGlow)" class="glow-circle" />
+  <g transform="translate(420, 70)">
+    <circle r="50" fill="url(#purpleGlow)" class="glow-circle" />
     <circle r="32" fill="#0f172a" stroke="#a855f7" stroke-width="2" />
     <text y="-3" class="node-text">RAG ENGINE</text>
-    <text y="7" class="sub-text">Vector Search</text>
+    <text y="7" class="sub-text">Vector Store</text>
     <text y="15" class="sub-text">+ BM25 Rerank</text>
   </g>
 
   <!-- NODE 3: SQL Execution Node (Bottom) -->
-  <g transform="translate(420, 210)" class="pulse-node" style="animation-delay: 0.5s;">
-    <circle r="45" fill="url(#tealGlow)" class="glow-circle" />
+  <g transform="translate(420, 210)">
+    <circle r="50" fill="url(#tealGlow)" class="glow-circle" />
     <circle r="32" fill="#0f172a" stroke="#14b8a6" stroke-width="2" />
-    <text y="-3" class="node-text">SQL GUARD</text>
+    <text y="-3" class="node-text">SQL ENGINE</text>
     <text y="7" class="sub-text">NL-to-SQL</text>
-    <text y="15" class="sub-text">AST Self-Correction</text>
+    <text y="15" class="sub-text">Self-Correction</text>
   </g>
 
   <!-- NODE 4: Merge Synthesizer Node -->
-  <g transform="translate(638, 140)" class="pulse-node" style="animation-delay: 1s;">
-    <circle r="40" fill="url(#roseGlow)" class="glow-circle" />
+  <g transform="translate(638, 140)">
+    <circle r="46" fill="url(#roseGlow)" class="glow-circle" />
     <circle r="28" fill="#0f172a" stroke="#f43f5e" stroke-width="2" />
     <text y="-3" class="node-text">MERGE</text>
     <text y="7" class="sub-text">LLM Answer</text>
@@ -196,9 +188,9 @@
 
   <!-- NODE 5: Final Output Destination -->
   <g transform="translate(755, 140)">
-    <circle r="30" fill="url(#roseGlow)" class="glow-circle" />
+    <circle r="36" fill="url(#roseGlow)" class="glow-circle" />
     <circle r="20" fill="#0f172a" stroke="url(#borderGrad)" stroke-width="1.5" />
     <text y="-2" class="node-text">OUTPUT</text>
-    <text y="8" class="sub-text">Response + Chart</text>
+    <text y="8" class="sub-text">Result + Chart</text>
   </g>
 </svg>
