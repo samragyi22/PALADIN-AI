@@ -1,0 +1,46 @@
+# =============================================================================
+# Enterprise AI Analyst — Docker Compose
+# =============================================================================
+# Usage:
+#   docker-compose up --build          # Start with build
+#   docker-compose up -d               # Start detached
+#   docker-compose down                # Stop and remove containers
+# =============================================================================
+
+version: "3.9"
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: enterprise-ai-backend
+    ports:
+      - "8000:8000"
+    environment:
+      # LLM Configuration — override with real keys or use mock mode
+      - LLM_PROVIDER=${LLM_PROVIDER:-gemini}
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY:-mock_google_api_key}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-mock_openai_api_key}
+      - COHERE_API_KEY=${COHERE_API_KEY:-mock_cohere_api_key}
+      # Storage
+      - DATA_DIR=/data
+      # Server
+      - ENV=production
+      - HOST=0.0.0.0
+      - PORT=8000
+    volumes:
+      # Persist all data (documents, chroma, sqlite, logs) on the host
+      - ./data:/data
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python3", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+# Shared named volume for persistent data
+volumes:
+  ai_data:
+    driver: local
