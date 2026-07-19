@@ -1,386 +1,196 @@
 # 🏢 Enterprise AI Analyst
 
-> An agentic, multi-modal enterprise intelligence platform that answers natural language questions over both **unstructured documents** (PDF, DOCX) and **structured tabular data** (CSV, SQLite) — simultaneously.
+[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-18%2B-61DAFB.svg)](https://react.dev/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Orchestration: LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
 
-Powered by a **LangGraph state machine** with 6 nodes: Intent Router → RAG / SQL (parallel) → Merge → Chart → Evaluate. Supports Google Gemini and OpenAI, with a built-in offline mock LLM for development.
+> **Tagline:** An agentic, multi-modal enterprise intelligence console that queries, analyzes, and visualizes unstructured documents (PDF, DOCX) and structured databases (CSV, SQLite) simultaneously using natural language.
+
+[Live Demo Console](https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst)
+
+---
+
+## 📖 Table of Contents
+1. [Overview](#-overview)
+2. [Key Features](#-key-features)
+3. [Architecture](#-architecture)
+4. [Tech Stack](#-tech-stack)
+5. [Local Quick Start](#-local-quick-start)
+6. [Folder Structure](#-folder-structure)
+7. [API Reference](#-api-reference)
+8. [Running Tests](#-running-tests)
+9. [Docker Deployment](#-docker-deployment)
+10. [Troubleshooting](#-troubleshooting)
+11. [Contributions & License](#-contributions--license)
+
+---
+
+## 🔍 Overview
+
+Enterprise AI Analyst bridges the gap between structured databases and unstructured documents. Users can upload various files—such as marksheets, resumes, contracts, or sales databases—and query them in plain English. The platform dynamically routes queries, fetches relevant facts, executes secure SQL queries, generates charts, and exports full session records as styled PDF reports.
+
+![Enterprise AI Analyst Node Flow](./frontend/public/architecture_animation.svg)
 
 ---
 
 ## ✨ Key Features
 
-| Feature | Description |
-|---|---|
-| 🧠 **Smart Intent Routing** | LLM classifies queries as `rag`, `sql`, or `hybrid` automatically |
-| 📄 **Hybrid RAG** | Vector (ChromaDB) + BM25 keyword search + Cohere Reranking |
-| 🗃️ **NL→SQL with Self-Correction** | Generates SQLite queries, validates with AST guardian, retries on errors (3x) |
-| 🔒 **SQL Security** | AST-based validator blocks all mutation queries (DROP, DELETE, INSERT, etc.) |
-| 📊 **Auto Charts** | Detects bar / line / pie from SQL results and renders via Recharts |
-| 📏 **LLM-as-Judge Evaluation** | Faithfulness, Answer Relevancy, Context Recall scored per response |
-| 📑 **PDF Reports** | Full session export with tables, charts (Matplotlib), and citations |
-| 🌗 **Dark / Light Mode** | Tailwind-driven theme with glassmorphism UI |
-
----
-
-## 🗂️ Project Structure
-
-```
-Enterprise-AI-Analyst/
-├── backend/                   Python FastAPI backend
-│   ├── app/
-│   │   ├── main.py            FastAPI app + CORS
-│   │   ├── config.py          Settings (pydantic-settings, .env)
-│   │   ├── api/
-│   │   │   ├── routes.py      All API endpoints
-│   │   │   └── schemas.py     Pydantic request/response models
-│   │   └── core/
-│   │       ├── agent.py       LangGraph 6-node state machine
-│   │       ├── rag.py         Document ingestion + hybrid retrieval
-│   │       ├── sql.py         CSV ingestion + NL→SQL + SQLGuardian
-│   │       ├── evaluator.py   LLM-as-judge quality evaluation
-│   │       ├── reporter.py    PDF report generation (ReportLab)
-│   │       └── logger.py      Session event logging
-│   ├── tests/
-│   │   ├── test_e2e_complete.py   Full 7-scenario E2E test suite
-│   │   ├── test_sql_engine.py     SQL Guardian + schema extraction tests
-│   │   └── test_state_machine.py  LangGraph graph unit tests
-│   ├── requirements.txt
-│   └── .env.example
-├── frontend/                  React + Vite + Tailwind frontend
-│   └── src/
-│       ├── App.jsx            3-column root layout
-│       ├── context/
-│       │   └── ApiContext.jsx Global state + API calls
-│       └── components/
-│           ├── Sidebar.jsx        File upload + session management
-│           ├── ChatWindow.jsx     Chat UI + SQL + citations + metrics
-│           ├── ChartRenderer.jsx  Live Recharts visualization panel
-│           └── FileUploader.jsx   Drag-and-drop upload component
-├── data/                      Auto-created data directories
-│   ├── documents/             Uploaded PDFs & DOCX files
-│   ├── chroma/                ChromaDB vector store
-│   ├── sqlite/                SQLite database (analyst.db)
-│   └── logs/                  Session event logs
-├── setup.sh                   One-command local setup script
-├── docker-compose.yml         Docker Compose for containerized deployment
-└── Dockerfile                 Backend Docker image
-```
+* **Smart Intent Routing:** Classifies user intent dynamically between document retrieval (`rag`), database querying (`sql`), or both (`hybrid`).
+* **Hybrid RAG Pipeline:** Combines ChromaDB vector retrieval + BM25 keyword search with Cohere reranking for factual precision.
+* **SQL Generation & Guardian:** Translates natural language to SQLite commands with AST-based safety checks to block mutation commands (DROP, DELETE, etc.).
+* **Dynamic Charting:** Detects visualizable tabular trends from query responses and renders interactive charts (Bar, Line, Area, Pie) via Recharts.
+* **LLM-as-Judge Evaluation:** Scores answer relevance, faithfulness, and context recall in real-time.
+* **PDF Report Exports:** Compiles queries, charts, tabular grids, and source citations into styled PDF documents.
+* **Conversational Memory:** Re-writes follow-up inputs based on chat history threads.
+* **Voice Ingestion:** Transcribes voice queries to text inputs.
 
 ---
 
 ## 🏛️ Architecture
 
+The backend utilizes a **LangGraph StateGraph** to coordinate multi-agent nodes:
+
 ```
 User Query
     │
     ▼
-[1. Router Node]  ──── classifies intent: "rag" / "sql" / "hybrid"
+[1. Router Node] ──── Classifies intent: "rag" / "sql" / "hybrid"
     │
-    ├── "rag"    ──► [2. RAG Node]  → ChromaDB vector + BM25 + Cohere rerank
-    ├── "sql"    ──► [3. SQL Node]  → NL→SQL → Guardian → Execute → retry
-    └── "hybrid" ──► [2. RAG Node] AND [3. SQL Node]  (parallel fan-out)
-                          │               │
-                          └───────┬───────┘
-                                  ▼
-                         [4. Merge Node]   → LLM synthesizes final answer
-                                  │
-                         [5. Chart Node]   → auto-detects bar/line/pie
-                                  │
-                         [6. Evaluation Node] → faithfulness / relevancy / recall
-                                  │
-                              Response
+    ├── "rag"    ──► [2. RAG Node] ──► ChromaDB Vector + BM25 + Cohere Rerank
+    ├── "sql"    ──► [3. SQL Node] ──► NL-to-SQL -> Guardian Check -> Execute -> Retry Loop
+    └── "hybrid" ──► Parallel Fan-Out to RAG and SQL Nodes
+                           │               │
+                           └───────┬───────┘
+                                   ▼
+                          [4. Merge Node]    ──► LLM synthesizes final answer
+                                   │
+                          [5. Chart Node]    ──► Auto-detects chart configurations
+                                   │
+                          [6. Evaluation Node] ──► Faithfulness, Relevancy, and Recall grading
+                                   │
+                               Response
 ```
 
 ---
 
-## 🚀 Quick Start
+## 🔧 Tech Stack
+
+* **Backend Framework:** FastAPI + Uvicorn
+* **Agentic Orchestration:** LangGraph (StateGraph)
+* **AI Models:** Google Gemini 1.5 Flash (Default) / OpenAI GPT-4o-mini
+* **Vector Database:** ChromaDB (Persistent)
+* **Document Parsing:** PyMuPDF (`fitz`), Python-Docx, Tesseract OCR
+* **PDF Compilation:** ReportLab + Matplotlib
+* **Frontend UI:** React 18 + Vite + Tailwind CSS
+* **Visualization Layer:** Recharts
+* **Database Layer:** SQLite + SQLAlchemy + Pandas
+
+---
+
+## 🚀 Local Quick Start
 
 ### Prerequisites
-- **Python 3.10+**
-- **Node.js 18+**
-- API key for **Google Gemini** or **OpenAI** (optional — works offline without one)
+* Python 3.10+
+* Node.js 18+
+* Google Gemini or OpenAI API Key (Optional — fallback mock LLM is available)
 
-### Option A: Automated Setup (Recommended)
-
+### Option A: Automated One-Command Setup
 ```bash
-# From project root
 chmod +x setup.sh
 ./setup.sh
 ```
 
-This installs all dependencies, creates the `.env` from the template, and prints startup instructions.
-
 ### Option B: Manual Setup
 
-#### 1. Backend
-
+#### 1. Backend Server Setup
 ```bash
 cd backend
-
-# Create and activate virtual environment
 python3 -m venv venv
-source venv/bin/activate       # macOS/Linux
-# venv\Scripts\activate        # Windows
-
-# Install dependencies
+source venv/bin/activate # On Windows use: venv\Scripts\activate
 pip install -r requirements.txt
-
-# Configure environment
 cp .env.example .env
-# Edit .env and add your API keys (optional — mock LLM works without them)
-
-# Start the FastAPI server
+# Edit .env to add your API keys
 uvicorn app.main:app --port 8000 --reload
 ```
+API Documentation: `http://localhost:8000/docs`
 
-API docs available at: `http://localhost:8000/docs`
-
-#### 2. Frontend
-
+#### 2. Frontend Client Setup
 ```bash
 cd frontend
-
-# Install dependencies
 npm install
-
-# Start the Vite dev server
 npm run dev
 ```
-
 Open: `http://localhost:5173`
 
 ---
 
-## ⚙️ Environment Variables
+## 🗂️ Folder Structure
 
-Edit `backend/.env` (copy from `backend/.env.example`):
-
-| Variable | Required | Default | Description |
-|---|---|---|---|
-| `LLM_PROVIDER` | ✅ | `gemini` | `"gemini"` or `"openai"` |
-| `GOOGLE_API_KEY` | ⚠️ | — | Google Gemini API key ([get one](https://aistudio.google.com/)) |
-| `OPENAI_API_KEY` | ⚠️ | — | OpenAI API key ([get one](https://platform.openai.com/)) |
-| `COHERE_API_KEY` | ❌ | — | Cohere Rerank API key (optional — falls back to BM25) |
-| `DATA_DIR` | ✅ | `../data` | Path to data storage directory |
-| `ENV` | ✅ | `development` | `"development"` or `"production"` |
-| `PORT` | ✅ | `8000` | Backend server port |
-| `HOST` | ✅ | `0.0.0.0` | Backend server host |
-
-> **Offline mode**: If API keys are missing or set to placeholder values (`your_*`), the system automatically uses an offline mock LLM. All features work — SQL ingestion, chart generation, PDF export, and E2E tests — without any API calls.
+```
+Enterprise-AI-Analyst/
+├── backend/                   # Python FastAPI Backend
+│   ├── app/
+│   │   ├── main.py            # App entry point
+│   │   ├── api/               # Router endpoints & schemas
+│   │   └── core/              # State machines & logic (agent, RAG, SQL)
+│   └── tests/                 # Unit and E2E test scripts
+├── frontend/                  # React Vite Frontend
+│   ├── public/                # Static icons & animated diagrams
+│   └── src/                   # Components & state contexts
+├── data/                      # Persistent SQLite & ChromaDB folder
+├── Dockerfile                 # Backend container configuration
+├── docker-compose.yml         # Container orchestration template
+└── setup.sh                   # Script for automatic server boot
+```
 
 ---
 
 ## 🌐 API Reference
 
-### `POST /api/upload`
-Upload a document or data file for processing.
-
-**Accepted formats:** `PDF`, `DOCX`, `CSV`, `SQLite (.db)`
-
-```bash
-curl -X POST http://localhost:8000/api/upload \
-  -F "file=@/path/to/your/report.pdf"
-```
-
-**Response:**
-```json
-{
-  "status": "success",
-  "file_id": "uuid-string",
-  "filename": "report.pdf",
-  "processing_status": "processing"
-}
-```
-
----
-
-### `GET /api/upload/status/{file_id}`
-Poll background processing status.
-
-```bash
-curl http://localhost:8000/api/upload/status/{file_id}
-```
-
-**Response:**
-```json
-{ "status": "completed", "filename": "report.pdf", "error": null }
-```
-
-Status values: `processing` | `completed` | `failed`
-
----
-
 ### `POST /api/chat`
-Submit a natural language query. Runs the full LangGraph pipeline.
-
+Submit natural language query.
 ```bash
 curl -X POST http://localhost:8000/api/chat \
   -H "Content-Type: application/json" \
-  -d '{"query": "Show me Q3 sales by month", "session_id": "my-session"}'
+  -d '{"query": "What is my total GPA score?", "session_id": "session-123"}'
 ```
 
-**Response:**
-```json
-{
-  "status": "success",
-  "intent": "sql",
-  "answer": "## Q3 Sales Summary\n- July: $165,000...",
-  "citations": [],
-  "sql_query": "SELECT month, sales_actual FROM q3_sales",
-  "sql_results": [{"month": "July", "sales_actual": 165000}],
-  "chart_config": {
-    "type": "bar",
-    "xAxis": "month",
-    "yAxis": "sales_actual",
-    "title": "Sales Actual by Month",
-    "data": [...]
-  },
-  "evaluation_metrics": {
-    "faithfulness": 1.0,
-    "answer_relevancy": 1.0,
-    "context_recall": 1.0
-  }
-}
-```
-
----
-
-### `GET /api/export-pdf?session_id={id}`
-Download a styled PDF report of the full session.
-
+### `POST /api/upload`
+Upload a source file for processing.
 ```bash
-curl "http://localhost:8000/api/export-pdf?session_id=my-session" \
-  --output report.pdf
+curl -X POST http://localhost:8000/api/upload \
+  -F "file=@/path/to/marksheet.pdf"
 ```
-
-Returns a `application/pdf` binary stream. PDF includes: queries, answers, SQL blocks, data tables, Matplotlib charts, and document citations.
 
 ---
 
 ## 🧪 Running Tests
-
-All tests use a mock LLM and mock embeddings — **no real API keys required**.
-
+All tests run locally using the offline mock LLM context:
 ```bash
 cd backend
-
-# Full E2E integration test suite (Task 26 — all 7 scenarios)
-python3 tests/test_e2e_complete.py
-
-# SQL Guardian security + schema extraction unit tests
-python3 tests/test_sql_engine.py
-
-# LangGraph state machine unit tests (with mock LLM)
-python3 tests/test_state_machine.py
+python3 tests/test_e2e_complete.py   # Run 7-scenario E2E checks
+python3 tests/test_sql_engine.py     # Verify SQL Guardian blocking rules
+python3 tests/test_state_machine.py  # Verify LangGraph orchestration
 ```
-
-### Test Coverage
-
-| Test | Scenario |
-|---|---|
-| Test 1 | Health Check — Config & Settings load correctly |
-| Test 2 | RAG Flow — PDF seed → query → citations returned |
-| Test 3 | SQL Flow — CSV upload → NL→SQL → execution → chart |
-| Test 4 | Hybrid Flow — Both RAG + SQL parallel paths → merged answer |
-| Test 5 | PDF Export — ReportLab compiles valid binary PDF |
-| Test 6 | Self-Correction — SQL retry loop corrects errors within 3 retries |
-| Test 7 | Security Guardrail — SQLGuardian blocks 8 attack patterns |
 
 ---
 
 ## 🐳 Docker Deployment
-
-### Using Docker Compose (Recommended)
-
 ```bash
-# From project root
 docker-compose up --build
 ```
-
-- Backend: `http://localhost:8000`
-- Frontend: `http://localhost:5173` (run separately with `npm run dev`)
-
-### Backend Only (Docker)
-
-```bash
-docker build -t enterprise-ai-analyst-backend .
-docker run -p 8000:8000 \
-  -e LLM_PROVIDER=gemini \
-  -e GOOGLE_API_KEY=your_key_here \
-  enterprise-ai-analyst-backend
-```
+* Backend access: `http://localhost:8000`
+* Frontend access: `http://localhost:5173`
 
 ---
 
-## 🔧 Troubleshooting
+## 🤝 Contributions & License
 
-### `ModuleNotFoundError: No module named 'langgraph'`
-**Cause:** Dependencies not installed in the active Python environment.
-```bash
-cd backend && pip install -r requirements.txt
-```
+### Contributions
+Contributions are welcome. Please submit a Pull Request or open an Issue to propose changes or report bugs.
 
-### `Unexpected keyword argument 'openai_api_key'`
-**Cause:** `langchain-openai >= 0.1` renamed `openai_api_key` to `api_key`.  
-**Fix:** Already applied in this codebase. If you encounter it elsewhere, replace `openai_api_key=` with `api_key=`.
-
-### `AttributeError: np.float_ was removed in NumPy 2.0`
-**Cause:** Old ChromaDB (< 0.5) is incompatible with NumPy 2.0.  
-**Fix:** Already pinned in `requirements.txt` as `chromadb>=0.5.0`. Run `pip install --upgrade chromadb`.
-
-### `ChromaDB vector store is empty on retrieval`
-**Cause:** File was uploaded but background processing hasn't completed.  
-**Fix:** Poll `GET /api/upload/status/{file_id}` until status is `"completed"` before querying.
-
-### `PDF upload returns 400 - Unsupported file type`
-**Cause:** Only `.pdf`, `.docx`, `.csv`, `.sqlite`, `.db` are accepted.
-
-### `LangGraph execution failed: 500`
-**Cause:** Usually an LLM API error. Check your API key in `.env`.  
-**Fix:** Set placeholder values (e.g. `mock_google_api_key`) to fall back to offline mock LLM.
-
-### Frontend shows blank page
-```bash
-cd frontend && npm install && npm run dev
-```
-Ensure the backend is running on port 8000 before starting the frontend.
-
----
-
-## 🧱 Tech Stack
-
-| Layer | Technology |
-|---|---|
-| Backend Framework | FastAPI + Uvicorn |
-| AI Orchestration | LangGraph (StateGraph) |
-| LLM (Chat) | Google Gemini 1.5 Flash / OpenAI GPT-4o-mini |
-| Embeddings | Google `embedding-001` / OpenAI `text-embedding-3-small` |
-| Vector Store | ChromaDB >= 0.5.0 (persistent) |
-| Keyword Search | BM25 (`rank-bm25`) |
-| Reranking | Cohere Rerank API (optional) |
-| SQL Database | SQLite + SQLAlchemy |
-| SQL Security | sqlparse AST validator |
-| PDF Parsing | PyMuPDF (`fitz`) |
-| DOCX Parsing | python-docx |
-| PDF Generation | ReportLab |
-| Chart (backend) | Matplotlib (PNG for PDF reports) |
-| Chart (frontend) | Recharts |
-| Frontend | React 18 + Vite + Tailwind CSS |
-| Data Processing | Pandas |
-| Settings | Pydantic v2 + pydantic-settings |
-
----
-
-Backend - 
-cd "/Users/kartikbhardwaj/Desktop/Enterprise Ai Project/Enterprise-AI-Analyst/backend"
-source venv/bin/activate
-uvicorn app.main:app --port 8000 --reload
-
-
-Frontend - 
-cd "/Users/kartikbhardwaj/Desktop/Enterprise Ai Project/Enterprise-AI-Analyst/frontend"
-npm run dev
-
-
-## 📄 License
-
-MIT License — free to use, modify, and distribute.
+### License
+This project is licensed under the MIT License. Feel free to use, modify, and distribute.
