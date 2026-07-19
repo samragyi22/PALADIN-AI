@@ -106,8 +106,9 @@
       font-family: 'Inter', system-ui, -apple-system, sans-serif;
       font-size: 9px;
       font-weight: bold;
-      fill: #6366f1;
+      fill: #818cf8;
       text-anchor: middle;
+      letter-spacing: 0.5px;
     }
   </style>
 
@@ -186,12 +187,13 @@
     <circle r="32" fill="#090d16" stroke="#a855f7" stroke-width="2" />
     <text y="4" class="node-text">RAG ENGINE</text>
     
-    <!-- Sub-Text moved ABOVE the RAG circle to stay clear of other paths -->
-    <text y="-58" class="sub-text">ChromaDB Match</text>
-    <text y="-49" class="sub-text">BM25 Retrieval</text>
-    <text y="-40" class="sub-text">Cohere Rerank</text>
+    <!-- Adjusted Y offsets for sub-text details to ensure no collision -->
+    <text y="-52" class="sub-text">ChromaDB Match</text>
+    <text y="-43" class="sub-text">BM25 Retrieval</text>
+    <text y="-34" class="sub-text">Cohere Rerank</text>
   </g>
-  <text x="345" y="32" class="lane-label" fill="#a855f7">UNSTRUCTURED ROUTE</text>
+  <!-- Moved UNSTRUCTURED ROUTE lane label higher up to avoid text overlapping -->
+  <text x="345" y="16" class="lane-label" fill="#a855f7">UNSTRUCTURED ROUTE</text>
 
   <!-- NODE 3: SQL Execution Node (Bottom Lane) -->
   <g transform="translate(345, 250)">
@@ -199,12 +201,13 @@
     <circle r="32" fill="#090d16" stroke="#14b8a6" stroke-width="2" />
     <text y="4" class="node-text">SQL ENGINE</text>
     
-    <!-- Sub-Text moved BELOW the SQL circle -->
-    <text y="44" class="sub-text">NL-to-SQL Text</text>
-    <text y="53" class="sub-text">AST Guardian</text>
-    <text y="62" class="sub-text">Auto-Retry (3x)</text>
+    <!-- Adjusted Y offsets for sub-text details -->
+    <text y="34" class="sub-text">NL-to-SQL Text</text>
+    <text y="43" class="sub-text">AST Guardian</text>
+    <text y="52" class="sub-text">Auto-Retry (3x)</text>
   </g>
-  <text x="345" y="318" class="lane-label" fill="#14b8a6">STRUCTURED ROUTE</text>
+  <!-- Moved STRUCTURED ROUTE lane label lower down to avoid text overlapping -->
+  <text x="345" y="325" class="lane-label" fill="#14b8a6">STRUCTURED ROUTE</text>
 
   <!-- NODE 4: Merge Synthesizer Node -->
   <g transform="translate(525, 170)">
