@@ -1,0 +1,79 @@
+# =============================================================================
+# Enterprise AI Analyst — .gitignore
+# =============================================================================
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+.Python
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Virtual environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables (contains API keys — never commit)
+.env
+backend/.env
+
+# Data directories (auto-created, large binary files)
+data/documents/
+data/chroma/
+data/sqlite/
+data/logs/
+
+# Keep directory structure
+!data/documents/.gitkeep
+!data/chroma/.gitkeep
+!data/sqlite/.gitkeep
+!data/logs/.gitkeep
+
+# Test artifacts
+*.db
+test_*.csv
+test_*.db
+*.log
+
+# Node.js
+node_modules/
+frontend/node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Vite build output
+frontend/dist/
+frontend/.vite/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Docker
+*.log
+
+# Coverage
+.coverage
+htmlcov/
+.pytest_cache/
