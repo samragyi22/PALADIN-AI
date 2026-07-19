@@ -166,66 +166,73 @@
   <g transform="translate(45, 170)">
     <circle r="36" fill="url(#indigoGlow)" class="glow-circle" />
     <circle r="20" fill="#090d16" stroke="url(#borderGrad)" stroke-width="1.5" />
-    <text y="-2" class="node-text">INPUT</text>
-    <text y="8" class="sub-text">Query</text>
+    <text y="4" class="node-text">INPUT</text>
+    <text y="38" class="sub-text">User Query</text>
   </g>
 
   <!-- NODE 1: Router Node -->
   <g transform="translate(165, 170)">
     <circle r="46" fill="url(#indigoGlow)" class="glow-circle" />
-    <circle r="28" fill="#090d16" stroke="#6366F1" stroke-width="2" />
-    <text y="-5" class="node-text">ROUTER</text>
-    <text y="5" class="sub-text">Query Rewrite</text>
-    <text y="13" class="sub-text">Intent Classify</text>
+    <circle r="26" fill="#090d16" stroke="#6366F1" stroke-width="2" />
+    <text y="4" class="node-text">ROUTER</text>
+    
+    <text y="42" class="sub-text">Query Rewrite</text>
+    <text y="51" class="sub-text">Intent Classify</text>
   </g>
 
   <!-- NODE 2: RAG Retrieval Node (Top Lane) -->
   <g transform="translate(345, 90)">
     <circle r="52" fill="url(#purpleGlow)" class="glow-circle" />
-    <circle r="34" fill="#090d16" stroke="#a855f7" stroke-width="2" />
-    <text y="-7" class="node-text">RAG ENGINE</text>
-    <text y="4" class="sub-text">ChromaDB Match</text>
-    <text y="12" class="sub-text">BM25 Retrieval</text>
-    <text y="20" class="sub-text">Cohere Rerank</text>
+    <circle r="32" fill="#090d16" stroke="#a855f7" stroke-width="2" />
+    <text y="4" class="node-text">RAG ENGINE</text>
+    
+    <!-- Sub-Text moved ABOVE the RAG circle to stay clear of other paths -->
+    <text y="-58" class="sub-text">ChromaDB Match</text>
+    <text y="-49" class="sub-text">BM25 Retrieval</text>
+    <text y="-40" class="sub-text">Cohere Rerank</text>
   </g>
   <text x="345" y="32" class="lane-label" fill="#a855f7">UNSTRUCTURED ROUTE</text>
 
   <!-- NODE 3: SQL Execution Node (Bottom Lane) -->
   <g transform="translate(345, 250)">
     <circle r="52" fill="url(#tealGlow)" class="glow-circle" />
-    <circle r="34" fill="#090d16" stroke="#14b8a6" stroke-width="2" />
-    <text y="-7" class="node-text">SQL ENGINE</text>
-    <text y="4" class="sub-text">NL-to-SQL Text</text>
-    <text y="12" class="sub-text">AST Guardian</text>
-    <text y="20" class="sub-text">Auto-Retry (3x)</text>
+    <circle r="32" fill="#090d16" stroke="#14b8a6" stroke-width="2" />
+    <text y="4" class="node-text">SQL ENGINE</text>
+    
+    <!-- Sub-Text moved BELOW the SQL circle -->
+    <text y="44" class="sub-text">NL-to-SQL Text</text>
+    <text y="53" class="sub-text">AST Guardian</text>
+    <text y="62" class="sub-text">Auto-Retry (3x)</text>
   </g>
   <text x="345" y="318" class="lane-label" fill="#14b8a6">STRUCTURED ROUTE</text>
 
   <!-- NODE 4: Merge Synthesizer Node -->
   <g transform="translate(525, 170)">
     <circle r="46" fill="url(#roseGlow)" class="glow-circle" />
-    <circle r="28" fill="#090d16" stroke="#f43f5e" stroke-width="2" />
-    <text y="-5" class="node-text">MERGE</text>
-    <text y="5" class="sub-text">Context Blend</text>
-    <text y="13" class="sub-text">LLM Synthesis</text>
+    <circle r="26" fill="#090d16" stroke="#f43f5e" stroke-width="2" />
+    <text y="4" class="node-text">MERGE</text>
+    
+    <text y="42" class="sub-text">Context Blend</text>
+    <text y="51" class="sub-text">LLM Synthesis</text>
   </g>
 
   <!-- NODE 5: Real-Time Evaluator Node -->
   <g transform="translate(670, 170)">
     <circle r="46" fill="url(#goldGlow)" class="glow-circle" />
-    <circle r="28" fill="#090d16" stroke="#eab308" stroke-width="2" />
-    <text y="-7" class="node-text">EVALUATOR</text>
-    <text y="3" class="sub-text">LLM-as-Judge</text>
-    <text y="11" class="sub-text">Faithfulness</text>
-    <text y="19" class="sub-text">Recall &amp; Rel</text>
+    <circle r="26" fill="#090d16" stroke="#eab308" stroke-width="2" />
+    <text y="4" class="node-text">EVALUATOR</text>
+    
+    <text y="42" class="sub-text">LLM-as-Judge</text>
+    <text y="51" class="sub-text">Faithfulness</text>
+    <text y="60" class="sub-text">Recall &amp; Relevancy</text>
   </g>
 
   <!-- NODE 6: Output / Visualization Node -->
   <g transform="translate(765, 170)">
     <circle r="36" fill="url(#roseGlow)" class="glow-circle" />
     <circle r="20" fill="#090d16" stroke="url(#borderGrad)" stroke-width="1.5" />
-    <text y="-5" class="node-text">OUTPUT</text>
-    <text y="4" class="sub-text">Charts</text>
-    <text y="12" class="sub-text">PDF report</text>
+    <text y="4" class="node-text">OUTPUT</text>
+    
+    <text y="38" class="sub-text">Charts &amp; PDF</text>
   </g>
 </svg>
