@@ -1,28 +1,32 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 280" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 340" width="100%" height="100%">
   <defs>
     <!-- Background Gradient -->
     <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#090d16" />
+      <stop offset="0%" stop-color="#070a13" />
       <stop offset="50%" stop-color="#0f172a" />
-      <stop offset="100%" stop-color="#090d16" />
+      <stop offset="100%" stop-color="#070a13" />
     </linearGradient>
 
     <!-- Glowing Node Gradients -->
     <radialGradient id="indigoGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.5" />
+      <stop offset="0%" stop-color="#6366F1" stop-opacity="0.6" />
       <stop offset="100%" stop-color="#6366F1" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="purpleGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.5" />
+      <stop offset="0%" stop-color="#a855f7" stop-opacity="0.6" />
       <stop offset="100%" stop-color="#a855f7" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="tealGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.5" />
+      <stop offset="0%" stop-color="#14b8a6" stop-opacity="0.6" />
       <stop offset="100%" stop-color="#14b8a6" stop-opacity="0" />
     </radialGradient>
     <radialGradient id="roseGlow" cx="50%" cy="50%" r="50%">
-      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.5" />
+      <stop offset="0%" stop-color="#f43f5e" stop-opacity="0.6" />
       <stop offset="100%" stop-color="#f43f5e" stop-opacity="0" />
+    </radialGradient>
+    <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#eab308" stop-opacity="0.6" />
+      <stop offset="100%" stop-color="#eab308" stop-opacity="0" />
     </radialGradient>
 
     <!-- Node Border Gradients -->
@@ -42,7 +46,7 @@
       animation: dash 35s linear infinite;
     }
     .signal {
-      animation: travel 4s infinite linear;
+      animation: travel 4.5s infinite linear;
     }
 
     @keyframes dash {
@@ -51,7 +55,7 @@
       }
     }
     @keyframes pulseGlow {
-      0%, 100% { opacity: 0.3; }
+      0%, 100% { opacity: 0.35; }
       50% { opacity: 0.95; }
     }
     @keyframes travel {
@@ -62,23 +66,26 @@
     }
 
     /* Node-specific positions for paths (used for signals) */
+    .signal-input-router {
+      offset-path: path('M 45,170 L 165,170');
+    }
     .signal-router-rag {
-      offset-path: path('M 182,140 L 420,70');
+      offset-path: path('M 165,170 L 345,90');
     }
     .signal-router-sql {
-      offset-path: path('M 182,140 L 420,210');
+      offset-path: path('M 165,170 L 345,250');
     }
     .signal-rag-merge {
-      offset-path: path('M 420,70 L 638,140');
+      offset-path: path('M 345,90 L 525,170');
     }
     .signal-sql-merge {
-      offset-path: path('M 420,210 L 638,140');
+      offset-path: path('M 345,250 L 525,170');
     }
-    .signal-input-router {
-      offset-path: path('M 45,140 L 182,140');
+    .signal-merge-eval {
+      offset-path: path('M 525,170 L 670,170');
     }
-    .signal-merge-output {
-      offset-path: path('M 638,140 L 755,140');
+    .signal-eval-output {
+      offset-path: path('M 670,170 L 765,170');
     }
 
     /* Typography */
@@ -95,102 +102,130 @@
       fill: #94a3b8;
       text-anchor: middle;
     }
+    .lane-label {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-size: 9px;
+      font-weight: bold;
+      fill: #6366f1;
+      text-anchor: middle;
+    }
   </style>
 
   <!-- Background Canvas -->
-  <rect width="800" height="280" rx="16" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" />
+  <rect width="800" height="340" rx="16" fill="url(#bgGrad)" stroke="#1e293b" stroke-width="1.5" />
 
   <!-- Grid Pattern Overlay -->
-  <g opacity="0.05">
-    <path d="M 0,20 L 800,20 M 0,40 L 800,40 M 0,60 L 800,60 M 0,80 L 800,80 M 0,100 L 800,100 M 0,120 L 800,120 M 0,140 L 800,140 M 0,160 L 800,160 M 0,180 L 800,180 M 0,200 L 800,200 M 0,220 L 800,220 M 0,240 L 800,240 M 0,260 L 800,260" stroke="#cccccc" stroke-width="1" />
-    <path d="M 20,0 L 20,280 M 40,0 L 40,280 M 60,0 L 60,280 M 80,0 L 80,280 M 100,0 L 100,280 M 120,0 L 120,280 M 140,0 L 140,280 M 160,0 L 160,280 M 180,0 L 180,280 M 200,0 L 200,280 M 220,0 L 220,280 M 240,0 L 240,280 M 260,0 L 260,280 M 280,0 L 280,280 M 300,0 L 300,280 M 320,0 L 320,280 M 340,0 L 340,280 M 360,0 L 360,280 M 380,0 L 380,280 M 400,0 L 400,280 M 420,0 L 420,280 M 440,0 L 440,280 M 460,0 L 460,280 M 480,0 L 480,280 M 500,0 L 500,280 M 520,0 L 520,280 M 540,0 L 540,280 M 560,0 L 560,280 M 580,0 L 580,280 M 600,0 L 600,280 M 620,0 L 620,280 M 640,0 L 640,280 M 660,0 L 660,280 M 680,0 L 680,280 M 700,0 L 700,280 M 720,0 L 720,280 M 740,0 L 740,280 M 760,0 L 760,280 M 780,0 L 780,280" stroke="#cccccc" stroke-width="1" />
+  <g opacity="0.04">
+    <path d="M 0,20 L 800,20 M 0,40 L 800,40 M 0,60 L 800,60 M 0,80 L 800,80 M 0,100 L 800,100 M 0,120 L 800,120 M 0,140 L 800,140 M 0,160 L 800,160 M 0,180 L 800,180 M 0,200 L 800,200 M 0,220 L 800,220 M 0,240 L 800,240 M 0,260 L 800,260 M 0,280 L 800,280 M 0,300 L 800,300 M 0,320 L 800,320" stroke="#cccccc" stroke-width="1" />
+    <path d="M 20,0 L 20,340 M 40,0 L 40,340 M 60,0 L 60,340 M 80,0 L 80,340 M 100,0 L 100,340 M 120,0 L 120,340 M 140,0 L 140,340 M 160,0 L 160,340 M 180,0 L 180,340 M 200,0 L 200,340 M 220,0 L 220,340 M 240,0 L 240,340 M 260,0 L 260,340 M 280,0 L 280,340 M 300,0 L 300,340 M 320,0 L 320,340 M 340,0 L 340,340 M 360,0 L 360,340 M 380,0 L 380,340 M 400,0 L 400,340 M 420,0 L 420,340 M 440,0 L 440,340 M 460,0 L 460,340 M 480,0 L 480,340 M 500,0 L 500,340 M 520,0 L 520,340 M 540,0 L 540,340 M 560,0 L 560,340 M 580,0 L 580,340 M 600,0 L 600,340 M 620,0 L 620,340 M 640,0 L 640,340 M 660,0 L 660,340 M 680,0 L 680,340 M 700,0 L 700,340 M 720,0 L 720,340 M 740,0 L 740,340 M 760,0 L 760,340 M 780,0 L 780,340" stroke="#cccccc" stroke-width="1" />
   </g>
 
   <!-- Connection Lines (Dashed Paths) -->
   <g fill="none" stroke-width="2">
     <!-- Input to Router -->
-    <path d="M 45,140 L 182,140" stroke="#6366F1" opacity="0.3" />
-    <path d="M 45,140 L 182,140" stroke="#6366F1" class="flow-line" opacity="0.7" />
+    <path d="M 45,170 L 165,170" stroke="#6366F1" opacity="0.3" />
+    <path d="M 45,170 L 165,170" stroke="#6366F1" class="flow-line" opacity="0.7" />
 
-    <!-- Router to RAG (Top) -->
-    <path d="M 182,140 L 420,70" stroke="#a855f7" opacity="0.3" />
-    <path d="M 182,140 L 420,70" stroke="#a855f7" class="flow-line" opacity="0.7" />
+    <!-- Router to RAG (Top Branch) -->
+    <path d="M 165,170 L 345,90" stroke="#a855f7" opacity="0.3" />
+    <path d="M 165,170 L 345,90" stroke="#a855f7" class="flow-line" opacity="0.7" />
 
-    <!-- Router to SQL (Bottom) -->
-    <path d="M 182,140 L 420,210" stroke="#14b8a6" opacity="0.3" />
-    <path d="M 182,140 L 420,210" stroke="#14b8a6" class="flow-line" opacity="0.7" />
+    <!-- Router to SQL (Bottom Branch) -->
+    <path d="M 165,170 L 345,250" stroke="#14b8a6" opacity="0.3" />
+    <path d="M 165,170 L 345,250" stroke="#14b8a6" class="flow-line" opacity="0.7" />
 
     <!-- RAG to Merge -->
-    <path d="M 420,70 L 638,140" stroke="#a855f7" opacity="0.3" />
-    <path d="M 420,70 L 638,140" stroke="#a855f7" class="flow-line" opacity="0.7" />
+    <path d="M 345,90 L 525,170" stroke="#a855f7" opacity="0.3" />
+    <path d="M 345,90 L 525,170" stroke="#a855f7" class="flow-line" opacity="0.7" />
 
     <!-- SQL to Merge -->
-    <path d="M 420,210 L 638,140" stroke="#14b8a6" opacity="0.3" />
-    <path d="M 420,210 L 638,140" stroke="#14b8a6" class="flow-line" opacity="0.7" />
+    <path d="M 345,250 L 525,170" stroke="#14b8a6" opacity="0.3" />
+    <path d="M 345,250 L 525,170" stroke="#14b8a6" class="flow-line" opacity="0.7" />
 
-    <!-- Merge to Output -->
-    <path d="M 638,140 L 755,140" stroke="#f43f5e" opacity="0.3" />
-    <path d="M 638,140 L 755,140" stroke="#f43f5e" class="flow-line" opacity="0.7" />
+    <!-- Merge to Evaluation -->
+    <path d="M 525,170 L 670,170" stroke="#f43f5e" opacity="0.3" />
+    <path d="M 525,170 L 670,170" stroke="#f43f5e" class="flow-line" opacity="0.7" />
+
+    <!-- Evaluation to Output -->
+    <path d="M 670,170 L 765,170" stroke="#eab308" opacity="0.3" />
+    <path d="M 670,170 L 765,170" stroke="#eab308" class="flow-line" opacity="0.7" />
   </g>
 
   <!-- Glowing Signals (Animated Nodes traveling paths) -->
   <circle r="4" fill="#818cf8" class="signal signal-input-router" filter="drop-shadow(0 0 6px #6366F1)" />
-  <circle r="4" fill="#c084fc" class="signal signal-router-rag" style="animation-delay: 1s;" filter="drop-shadow(0 0 6px #a855f7)" />
-  <circle r="4" fill="#2dd4bf" class="signal signal-router-sql" style="animation-delay: 1s;" filter="drop-shadow(0 0 6px #14b8a6)" />
-  <circle r="4" fill="#c084fc" class="signal signal-rag-merge" style="animation-delay: 2.2s;" filter="drop-shadow(0 0 6px #a855f7)" />
-  <circle r="4" fill="#2dd4bf" class="signal signal-sql-merge" style="animation-delay: 2.2s;" filter="drop-shadow(0 0 6px #14b8a6)" />
-  <circle r="4" fill="#fda4af" class="signal signal-merge-output" style="animation-delay: 3.1s;" filter="drop-shadow(0 0 6px #f43f5e)" />
+  <circle r="4" fill="#c084fc" class="signal signal-router-rag" style="animation-delay: 0.8s;" filter="drop-shadow(0 0 6px #a855f7)" />
+  <circle r="4" fill="#2dd4bf" class="signal signal-router-sql" style="animation-delay: 0.8s;" filter="drop-shadow(0 0 6px #14b8a6)" />
+  <circle r="4" fill="#c084fc" class="signal signal-rag-merge" style="animation-delay: 2.1s;" filter="drop-shadow(0 0 6px #a855f7)" />
+  <circle r="4" fill="#2dd4bf" class="signal signal-sql-merge" style="animation-delay: 2.1s;" filter="drop-shadow(0 0 6px #14b8a6)" />
+  <circle r="4" fill="#fda4af" class="signal signal-merge-eval" style="animation-delay: 3.2s;" filter="drop-shadow(0 0 6px #f43f5e)" />
+  <circle r="4" fill="#fef08a" class="signal signal-eval-output" style="animation-delay: 3.9s;" filter="drop-shadow(0 0 6px #eab308)" />
 
   <!-- Node Circles & Text groups -->
 
-  <!-- NODE 0: Query Source -->
-  <g transform="translate(45, 140)">
+  <!-- NODE 0: Input Query -->
+  <g transform="translate(45, 170)">
     <circle r="36" fill="url(#indigoGlow)" class="glow-circle" />
-    <circle r="20" fill="#0f172a" stroke="url(#borderGrad)" stroke-width="1.5" />
+    <circle r="20" fill="#090d16" stroke="url(#borderGrad)" stroke-width="1.5" />
     <text y="-2" class="node-text">INPUT</text>
-    <text y="8" class="sub-text">User Query</text>
+    <text y="8" class="sub-text">Query</text>
   </g>
 
   <!-- NODE 1: Router Node -->
-  <g transform="translate(182, 140)">
+  <g transform="translate(165, 170)">
     <circle r="46" fill="url(#indigoGlow)" class="glow-circle" />
-    <circle r="28" fill="#0f172a" stroke="#6366F1" stroke-width="2" />
-    <text y="-2" class="node-text">ROUTER</text>
-    <text y="8" class="sub-text">Classifier</text>
+    <circle r="28" fill="#090d16" stroke="#6366F1" stroke-width="2" />
+    <text y="-5" class="node-text">ROUTER</text>
+    <text y="5" class="sub-text">Query Rewrite</text>
+    <text y="13" class="sub-text">Intent Classify</text>
   </g>
 
-  <!-- NODE 2: RAG Retrieval Node (Top) -->
-  <g transform="translate(420, 70)">
-    <circle r="50" fill="url(#purpleGlow)" class="glow-circle" />
-    <circle r="32" fill="#0f172a" stroke="#a855f7" stroke-width="2" />
-    <text y="-3" class="node-text">RAG ENGINE</text>
-    <text y="7" class="sub-text">Vector Store</text>
-    <text y="15" class="sub-text">+ BM25 Rerank</text>
+  <!-- NODE 2: RAG Retrieval Node (Top Lane) -->
+  <g transform="translate(345, 90)">
+    <circle r="52" fill="url(#purpleGlow)" class="glow-circle" />
+    <circle r="34" fill="#090d16" stroke="#a855f7" stroke-width="2" />
+    <text y="-7" class="node-text">RAG ENGINE</text>
+    <text y="4" class="sub-text">ChromaDB Match</text>
+    <text y="12" class="sub-text">BM25 Retrieval</text>
+    <text y="20" class="sub-text">Cohere Rerank</text>
   </g>
+  <text x="345" y="32" class="lane-label" fill="#a855f7">UNSTRUCTURED ROUTE</text>
 
-  <!-- NODE 3: SQL Execution Node (Bottom) -->
-  <g transform="translate(420, 210)">
-    <circle r="50" fill="url(#tealGlow)" class="glow-circle" />
-    <circle r="32" fill="#0f172a" stroke="#14b8a6" stroke-width="2" />
-    <text y="-3" class="node-text">SQL ENGINE</text>
-    <text y="7" class="sub-text">NL-to-SQL</text>
-    <text y="15" class="sub-text">Self-Correction</text>
+  <!-- NODE 3: SQL Execution Node (Bottom Lane) -->
+  <g transform="translate(345, 250)">
+    <circle r="52" fill="url(#tealGlow)" class="glow-circle" />
+    <circle r="34" fill="#090d16" stroke="#14b8a6" stroke-width="2" />
+    <text y="-7" class="node-text">SQL ENGINE</text>
+    <text y="4" class="sub-text">NL-to-SQL Text</text>
+    <text y="12" class="sub-text">AST Guardian</text>
+    <text y="20" class="sub-text">Auto-Retry (3x)</text>
   </g>
+  <text x="345" y="318" class="lane-label" fill="#14b8a6">STRUCTURED ROUTE</text>
 
   <!-- NODE 4: Merge Synthesizer Node -->
-  <g transform="translate(638, 140)">
+  <g transform="translate(525, 170)">
     <circle r="46" fill="url(#roseGlow)" class="glow-circle" />
-    <circle r="28" fill="#0f172a" stroke="#f43f5e" stroke-width="2" />
-    <text y="-3" class="node-text">MERGE</text>
-    <text y="7" class="sub-text">LLM Answer</text>
-    <text y="15" class="sub-text">Synthesis</text>
+    <circle r="28" fill="#090d16" stroke="#f43f5e" stroke-width="2" />
+    <text y="-5" class="node-text">MERGE</text>
+    <text y="5" class="sub-text">Context Blend</text>
+    <text y="13" class="sub-text">LLM Synthesis</text>
   </g>
 
-  <!-- NODE 5: Final Output Destination -->
-  <g transform="translate(755, 140)">
+  <!-- NODE 5: Real-Time Evaluator Node -->
+  <g transform="translate(670, 170)">
+    <circle r="46" fill="url(#goldGlow)" class="glow-circle" />
+    <circle r="28" fill="#090d16" stroke="#eab308" stroke-width="2" />
+    <text y="-7" class="node-text">EVALUATOR</text>
+    <text y="3" class="sub-text">LLM-as-Judge</text>
+    <text y="11" class="sub-text">Faithfulness</text>
+    <text y="19" class="sub-text">Recall &amp; Rel</text>
+  </g>
+
+  <!-- NODE 6: Output / Visualization Node -->
+  <g transform="translate(765, 170)">
     <circle r="36" fill="url(#roseGlow)" class="glow-circle" />
-    <circle r="20" fill="#0f172a" stroke="url(#borderGrad)" stroke-width="1.5" />
-    <text y="-2" class="node-text">OUTPUT</text>
-    <text y="8" class="sub-text">Result + Chart</text>
+    <circle r="20" fill="#090d16" stroke="url(#borderGrad)" stroke-width="1.5" />
+    <text y="-5" class="node-text">OUTPUT</text>
+    <text y="4" class="sub-text">Charts</text>
+    <text y="12" class="sub-text">PDF report</text>
   </g>
 </svg>
