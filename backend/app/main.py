@@ -22,13 +22,23 @@ app.add_middleware(
 # Include API routes
 app.include_router(api_router)
 
-@app.get("/")
-def read_root():
-    return {
-        "app": "Enterprise AI Analyst Backend",
-        "status": "online",
-        "docs_url": "/docs"
-    }
+# Check if front-end production build folder exists and serve it
+import os
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+
+frontend_dist_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend/dist"))
+
+if os.path.exists(frontend_dist_path):
+    app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
+else:
+    @app.get("/")
+    def read_root():
+        return {
+            "app": "Enterprise AI Analyst Backend",
+            "status": "online",
+            "docs_url": "/docs"
+        }
 
 @app.get("/health")
 def health_check():

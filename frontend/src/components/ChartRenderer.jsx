@@ -51,37 +51,24 @@ const ChartRenderer = () => {
     }
   }, [activeChartConfig]);
 
-  // Handle collapsed state
-  if (!analyticsPanelOpen) {
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.key === 'Escape' && analyticsPanelOpen) {
+        setAnalyticsPanelOpen(false);
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [analyticsPanelOpen, setAnalyticsPanelOpen]);
+
+  // If no chart config exists and closed, return clean hidden container
+  if (!activeChartConfig && !analyticsPanelOpen) {
     return (
-      <div className="w-0 overflow-hidden border-l-0 h-screen transition-all duration-300 bg-slate-50/20 dark:bg-darkBg glass" />
+      <div className="w-0 overflow-hidden border-l-0 h-screen drawer-transition bg-slate-50/20 dark:bg-darkBg glass hidden lg:block" />
     );
   }
 
-  if (!activeChartConfig) {
-    return (
-      <div className="w-[420px] border-l border-slate-200/50 dark:border-slate-800/50 h-screen flex flex-col items-center justify-center p-8 bg-slate-50/20 dark:bg-darkBg text-center space-y-5 glass transition-all duration-300 relative">
-        <button
-          onClick={() => setAnalyticsPanelOpen(false)}
-          className="absolute top-4 left-4 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800"
-          title="Collapse Panel"
-        >
-          <ChevronRight size={14} />
-        </button>
-        <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center text-slate-400 dark:text-slate-500 shadow-inner">
-          <BarChart3 size={28} className="animate-pulse" />
-        </div>
-        <div className="max-w-xs space-y-1.5">
-          <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 tracking-wide uppercase">Analytics Insights</h3>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-relaxed">
-            Upload CSV or database files and ask quantitative questions to see automated charts render here.
-          </p>
-        </div>
-      </div>
-    );
-  }
-
-  const { data, xAxis, yAxis, title } = activeChartConfig;
+  const { data = [], xAxis = '', yAxis = '', title = 'Analytics Visualizer' } = activeChartConfig || {};
 
   // 1. Color Palette configurations
   const palettes = {
@@ -114,7 +101,7 @@ const ChartRenderer = () => {
   const currentTheme = palettes[colorPalette];
 
   // 2. Multi-Series Detection (Find all numerical keys to enable overlay comparisons)
-  const allKeys = Object.keys(data[0] || {});
+  const allKeys = data && data.length > 0 ? Object.keys(data[0] || {}) : [];
   const numericKeys = allKeys.filter(key => {
     if (key === xAxis || key === 'index' || key.toLowerCase().includes('id')) return false;
     // Check if at least one row has a valid numeric value for this key
@@ -185,13 +172,59 @@ const ChartRenderer = () => {
   };
 
   return (
-    <div className="w-[420px] border-l border-slate-200/50 dark:border-slate-800/50 h-screen flex flex-col bg-slate-50/20 dark:bg-darkBg p-6 overflow-y-auto space-y-6 glass transition-all duration-300 relative">
+    <>
+      {/* Mobile Backdrop Overlay */}
+      <div 
+        className={`fixed inset-0 bg-slate-950/60 backdrop-blur-sm z-40 transition-opacity duration-300 lg:hidden ${
+          analyticsPanelOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setAnalyticsPanelOpen(false)}
+        aria-hidden="true"
+      />
+
+      {/* Main Drawer Container: Mobile Bottom-Sheet vs Desktop Right Panel */}
+      <div 
+        role="dialog"
+        aria-modal="true"
+        aria-label="Analytics Chart Visualizer"
+        className={`fixed inset-x-0 bottom-0 z-50 h-[85vh] rounded-t-3xl border-t border-slate-200/50 dark:border-slate-800/50 bg-slate-50 dark:bg-darkBg p-6 overflow-y-auto shadow-2xl bottom-sheet-transition lg:relative lg:inset-auto lg:h-screen lg:rounded-none lg:border-t-0 lg:border-l lg:bg-slate-50/20 lg:shadow-none lg:glass drawer-transition flex flex-col space-y-6 ${
+          analyticsPanelOpen 
+            ? 'translate-y-0 opacity-100 pointer-events-auto lg:w-[420px] lg:translate-y-0' 
+            : 'translate-y-full opacity-0 pointer-events-none lg:w-0 lg:translate-y-0 lg:opacity-0 lg:overflow-hidden lg:border-l-0'
+        }`}
+      >
+        {/* Mobile Grab Handle Indicator */}
+        <div className="w-12 h-1.5 rounded-full bg-slate-300 dark:bg-slate-700 mx-auto -mt-2 mb-1 shrink-0 lg:hidden" />
+
+        {!activeChartConfig ? (
+          <div className="h-full flex flex-col items-center justify-center text-center space-y-5 relative">
+            <button
+              type="button"
+              onClick={() => setAnalyticsPanelOpen(false)}
+              className="absolute top-0 left-0 p-1.5 rounded-lg border border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 btn-tactile focus-ring"
+              title="Collapse Panel"
+              aria-label="Collapse Analytics Panel"
+            >
+              <ChevronRight size={14} />
+            </button>
+            <div className="w-14 h-14 rounded-2xl bg-slate-100 dark:bg-slate-800/50 flex items-center justify-center text-slate-400 dark:text-slate-500 shadow-inner">
+              <BarChart3 size={28} className="animate-pulse" />
+            </div>
+            <div className="max-w-xs space-y-1.5">
+              <h3 className="text-xs font-bold text-slate-700 dark:text-slate-300 tracking-wide uppercase">Analytics Insights</h3>
+              <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-relaxed">
+                Upload CSV or database files and ask quantitative questions to see automated charts render here.
+              </p>
+            </div>
+          </div>
+        ) : (
+          <>
       {/* Title & Actions */}
       <div className="flex items-start justify-between">
         <div className="flex items-start space-x-2">
           <button
             onClick={() => setAnalyticsPanelOpen(false)}
-            className="p-1 rounded-md border border-slate-200/50 dark:border-slate-800/50 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0 mt-0.5"
+            className="p-1 rounded-md border border-slate-200/50 dark:border-slate-800/50 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-800 shrink-0 mt-0.5 btn-tactile focus-ring"
             title="Collapse Panel"
           >
             <ChevronRight size={12} />
@@ -210,14 +243,14 @@ const ChartRenderer = () => {
           <button
             onClick={handleExportPNG}
             title="Download PNG Image"
-            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-all border border-slate-200/20"
+            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 btn-tactile focus-ring border border-slate-200/20"
           >
             <Image size={12} />
           </button>
           <button
             onClick={handleExportData}
             title="Export Sliced JSON"
-            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 transition-all border border-slate-200/20"
+            className="p-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 btn-tactile focus-ring border border-slate-200/20"
           >
             <Download size={12} />
           </button>
@@ -265,8 +298,10 @@ const ChartRenderer = () => {
               return (
                 <button
                   key={btn.id}
+                  type="button"
                   onClick={() => setChartType(btn.id)}
-                  className={`py-1.5 px-1.5 rounded-lg flex flex-col items-center justify-center space-y-1 transition-all ${
+                  aria-label={`${btn.label} Chart View`}
+                  className={`py-1.5 px-1.5 rounded-lg flex flex-col items-center justify-center space-y-1 btn-tactile focus-ring ${
                     active
                       ? 'bg-white dark:bg-slate-800 shadow-sm text-electricIndigo font-bold'
                       : 'text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
@@ -292,8 +327,10 @@ const ChartRenderer = () => {
                 ].map(p => (
                   <button
                     key={p.id}
+                    type="button"
                     onClick={() => setColorPalette(p.id)}
-                    className={`w-3.5 h-3.5 rounded-full ${p.color} transition-all border ${
+                    aria-label={`Select ${p.id} Theme`}
+                    className={`w-3.5 h-3.5 rounded-full ${p.color} transition-all border focus-ring btn-tactile ${
                       colorPalette === p.id 
                         ? 'scale-125 border-slate-900 dark:border-white ring-1 ring-offset-1 ring-electricIndigo dark:ring-offset-darkBg' 
                         : 'border-transparent opacity-60 hover:opacity-100'
@@ -307,9 +344,11 @@ const ChartRenderer = () => {
             {/* Toggles */}
             <div className="flex space-x-2">
               <button
+                type="button"
                 onClick={() => setShowGrid(!showGrid)}
+                aria-label="Toggle Gridlines"
                 title="Toggle Gridlines"
-                className={`p-1.5 rounded-lg border transition-all ${
+                className={`p-1.5 rounded-lg border btn-tactile focus-ring ${
                   showGrid 
                     ? 'bg-indigo-500/10 border-indigo-500/20 text-electricIndigo' 
                     : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
@@ -318,9 +357,11 @@ const ChartRenderer = () => {
                 <Grid size={12} />
               </button>
               <button
+                type="button"
                 onClick={() => setShowLabels(!showLabels)}
+                aria-label="Toggle Labels"
                 title="Toggle Labels"
-                className={`p-1.5 rounded-lg border transition-all ${
+                className={`p-1.5 rounded-lg border btn-tactile focus-ring ${
                   showLabels 
                     ? 'bg-indigo-500/10 border-indigo-500/20 text-electricIndigo' 
                     : 'border-slate-200 dark:border-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-300'
@@ -617,7 +658,10 @@ const ChartRenderer = () => {
           </div>
         </div>
       </div>
-    </div>
+    </>
+  )}
+      </div>
+    </>
   );
 };
 

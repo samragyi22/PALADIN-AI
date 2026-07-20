@@ -28,7 +28,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div 
-      className={`glass-premium h-screen transition-all duration-300 flex flex-col z-20 border-r border-slate-200/50 dark:border-slate-800/50 ${
+      className={`glass-premium h-screen drawer-transition flex flex-col z-20 border-r border-slate-200/50 dark:border-slate-800/50 ${
         isOpen ? 'w-80' : 'w-16'
       }`}
     >
@@ -53,7 +53,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {isOpen && (
           <button 
             onClick={toggleSidebar}
-            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 btn-tactile focus-ring"
           >
             <ChevronLeft size={18} />
           </button>
@@ -65,7 +65,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {isOpen ? (
           <button
             onClick={startNewSession}
-            className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white font-medium shadow-md shadow-electricIndigo/20 hover:shadow-lg transition-all duration-200 text-sm"
+            className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white font-medium shadow-md shadow-electricIndigo/20 hover:shadow-lg text-sm btn-tactile focus-ring"
           >
             <Plus size={16} />
             <span>New Session</span>
@@ -73,7 +73,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         ) : (
           <button
             onClick={startNewSession}
-            className="w-10 h-10 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white flex items-center justify-center mx-auto shadow-md transition-all duration-200"
+            className="w-10 h-10 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white flex items-center justify-center mx-auto shadow-md btn-tactile focus-ring"
             title="New Session"
           >
             <Plus size={18} />
@@ -119,25 +119,31 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 return (
                   <div
                     key={sessId}
-                    className={`group flex items-center justify-between p-2 rounded-xl border text-xs transition-all duration-150 cursor-pointer ${
+                    className={`group flex items-center justify-between p-1 rounded-xl border text-xs transition-all duration-150 ${
                       isActive
                         ? 'bg-indigo-500/10 border-indigo-500/30 text-electricIndigo font-bold shadow-sm'
                         : 'bg-slate-50/50 dark:bg-slate-900/30 border-slate-100/60 dark:border-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/40 hover:border-slate-200 dark:hover:border-slate-700'
                     }`}
-                    onClick={() => switchSession(sessId)}
                   >
-                    <div className="flex items-center space-x-2 truncate">
-                      <MessageSquare size={13} className={isActive ? 'text-electricIndigo' : 'text-slate-400'} />
-                      <span className="truncate max-w-[150px] font-mono text-[10px]">
+                    <button
+                      type="button"
+                      onClick={() => switchSession(sessId)}
+                      className="flex-1 flex items-center space-x-2 truncate p-1.5 text-left btn-tactile focus-ring rounded-lg"
+                      aria-label={`Switch to session ${sessId.replace('session_', '')}`}
+                    >
+                      <MessageSquare size={13} className={isActive ? 'text-electricIndigo shrink-0' : 'text-slate-400 shrink-0'} />
+                      <span className="truncate max-w-[140px] font-mono text-[10px]">
                         {sessId.replace('session_', 'Session: ')}
                       </span>
-                    </div>
+                    </button>
                     <button
+                      type="button"
                       onClick={(e) => {
                         e.stopPropagation();
                         deleteSession(sessId);
                       }}
-                      className="p-1 rounded-md text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60 opacity-0 group-hover:opacity-100 transition-all duration-150"
+                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-150 btn-tactile focus-ring"
+                      aria-label={`Delete conversation session ${sessId.replace('session_', '')}`}
                       title="Delete Conversation"
                     >
                       <Trash2 size={12} />
@@ -210,8 +216,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             </div>
             
             <button 
+              type="button"
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
+              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 btn-tactile focus-ring"
+              aria-label={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
             </button>
@@ -219,15 +227,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         ) : (
           <div className="flex flex-col items-center space-y-3">
             <button 
+              type="button"
               onClick={toggleTheme}
-              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 btn-tactile focus-ring flex items-center justify-center"
+              aria-label={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
               title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
             </button>
             <button 
+              type="button"
               onClick={toggleSidebar}
-              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 btn-tactile focus-ring flex items-center justify-center"
+              aria-label="Expand Sidebar"
             >
               <ChevronRight size={18} />
             </button>

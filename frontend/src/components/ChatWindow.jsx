@@ -253,7 +253,7 @@ const ChatWindow = () => {
           {!analyticsPanelOpen && (
             <button
               onClick={() => setAnalyticsPanelOpen(true)}
-              className="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-electricIndigo border border-indigo-500/20 text-xs font-semibold transition-all shadow-sm animate-fade-in"
+              className="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg bg-indigo-500/10 hover:bg-indigo-500/20 text-electricIndigo border border-indigo-500/20 text-xs font-semibold shadow-sm animate-fade-in btn-tactile focus-ring"
               title="Show Analytics Panel"
             >
               <BarChart3 size={14} />
@@ -263,7 +263,7 @@ const ChatWindow = () => {
 
           <button
             onClick={exportPdf}
-            className="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold transition-all"
+            className="flex items-center space-x-1.5 py-1.5 px-3 rounded-lg bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 text-xs font-semibold btn-tactile focus-ring"
             title="Export Session as PDF"
           >
             <Download size={14} />
@@ -370,7 +370,8 @@ const ChatWindow = () => {
               type="button"
               onClick={() => setShowUploadMenu(!showUploadMenu)}
               disabled={loading || isUploading}
-              className={`p-3 rounded-xl border border-slate-200/50 dark:border-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 shadow-sm transition-all shrink-0 flex items-center justify-center hover:scale-[1.02] ${
+              aria-label="Upload photos and files"
+              className={`p-3 rounded-xl border border-slate-200/50 dark:border-slate-800/50 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 shadow-sm transition-all shrink-0 flex items-center justify-center btn-tactile focus-ring ${
                 isUploading ? 'animate-pulse bg-indigo-500/10 border-indigo-500/20 text-electricIndigo' : 'bg-white dark:bg-[#0E1526]/50'
               }`}
               title="Upload photos & files"
@@ -387,7 +388,7 @@ const ChatWindow = () => {
                     fileInputRef.current?.click();
                     setShowUploadMenu(false);
                   }}
-                  className="w-full flex items-center space-x-2.5 px-3 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-800/80 rounded-lg transition-colors"
+                  className="w-full flex items-center space-x-2.5 px-3 py-2 text-left hover:bg-slate-50 dark:hover:bg-slate-800/80 rounded-lg transition-colors btn-tactile focus-ring"
                 >
                   <Plus size={14} className="text-electricIndigo shrink-0" />
                   <div className="flex flex-col leading-tight">
@@ -419,14 +420,15 @@ const ChatWindow = () => {
               placeholder={isRecording ? "Listening... start speaking now" : (loading ? "Executing state graph..." : "Ask questions like 'Show me orders over $500' or 'Summarize cancellation rules'...")}
               disabled={loading}
               readOnly={isRecording}
-              className="w-full pl-4 pr-20 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0E1526]/50 text-slate-800 dark:text-slate-100 text-xs focus:outline-none focus:border-electricIndigo dark:focus:border-electricIndigo shadow-sm transition-all placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50"
+              className="w-full pl-4 pr-20 py-3 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-[#0E1526]/50 text-slate-800 dark:text-slate-100 text-xs focus:outline-none focus:border-electricIndigo dark:focus:border-electricIndigo focus-ring shadow-sm transition-all placeholder-slate-400 dark:placeholder-slate-500 disabled:opacity-50"
             />
             <div className="absolute right-2 flex items-center space-x-1.5">
               <button
                 type="button"
                 onClick={toggleRecording}
                 disabled={loading}
-                className={`p-2 rounded-lg transition-all border ${
+                aria-label={isRecording ? "Stop recording voice question" : "Record voice question"}
+                className={`p-2 rounded-lg transition-all border btn-tactile focus-ring ${
                   isRecording 
                     ? 'bg-rose-500 text-white animate-pulse border-rose-600' 
                     : 'bg-slate-100 hover:bg-slate-200 dark:bg-slate-800 dark:hover:bg-slate-700 text-slate-500 dark:text-slate-400 border-slate-200/20'
@@ -438,7 +440,8 @@ const ChatWindow = () => {
               <button
                 type="submit"
                 disabled={loading || isRecording || !input.trim()}
-                className="p-2 rounded-lg bg-electricIndigo text-white hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-electricIndigo transition-all"
+                aria-label="Send message"
+                className="p-2 rounded-lg bg-electricIndigo text-white hover:bg-indigo-600 disabled:opacity-30 disabled:hover:bg-electricIndigo transition-all btn-tactile focus-ring"
               >
                 <Send size={14} />
               </button>
@@ -487,7 +490,7 @@ const MessageBubble = ({ message }) => {
   }
 
   return (
-    <div className={`flex items-start space-x-3 ${isUser ? 'justify-end' : 'justify-start'}`}>
+    <div className={`flex items-start space-x-3 animate-message-entry ${isUser ? 'justify-end' : 'justify-start'}`}>
       {!isUser && (
         <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 shadow-md ${
           message.isError
