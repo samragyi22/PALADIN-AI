@@ -58,7 +58,7 @@
     rgba(255, 255, 255, 0) 100%
   );
   background-size: 200% 100%;
-  animation: shimmer-anim 1.5s infinite linear;
+  animation: shimmer-anim 2.2s infinite cubic-bezier(0.4, 0, 0.6, 1);
 }
 
 @keyframes shimmer-anim {
@@ -66,3 +66,66 @@
     background-position-x: -200%;
   }
 }
+
+/* Micro-Interaction & Collapsible Drawer Utilities */
+.btn-tactile {
+  @apply transition-all duration-150 active:scale-[0.97] hover:scale-[1.01];
+}
+
+.drawer-transition {
+  transition: width 300ms cubic-bezier(0.2, 0.8, 0.2, 1), 
+              opacity 200ms cubic-bezier(0.16, 1, 0.3, 1),
+              transform 300ms cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.bottom-sheet-transition {
+  transition: transform 350ms cubic-bezier(0.2, 0.8, 0.2, 1),
+              opacity 250ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+
+/* Chat Message Entry Animation */
+@keyframes messageSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-message-entry {
+  animation: messageSlideUp 250ms cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
+/* Accessibility Focus Ring Utility */
+.focus-ring {
+  @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-electricIndigo focus-visible:ring-offset-2 dark:focus-visible:ring-offset-darkBg transition-shadow;
+}
+
+/* Prefers-reduced-motion accessibility overrides */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+  .shimmer {
+    background: rgba(255, 255, 255, 0.05) !important;
+    animation: none !important;
+  }
+  .glow-indigo {
+    animation: none !important;
+    filter: drop-shadow(0 0 8px rgba(99, 102, 241, 0.5)) !important;
+  }
+  .animate-fade-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}
+

@@ -1,6 +1,10 @@
 import React, { createContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
+// Set global API base URL for deployment environments (split backend/frontend)
+axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || '';
+
+
 export const ApiContext = createContext();
 
 export const ApiProvider = ({ children }) => {

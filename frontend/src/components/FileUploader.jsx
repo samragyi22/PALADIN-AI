@@ -75,13 +75,15 @@ const FileUploader = () => {
 
   return (
     <div className="w-full">
-      <div
+      <button
+        type="button"
         onDragEnter={handleDrag}
         onDragOver={handleDrag}
         onDragLeave={handleDrag}
         onDrop={handleDrop}
         onClick={onButtonClick}
-        className={`w-full py-6 px-4 rounded-xl border border-dashed text-center cursor-pointer transition-all duration-200 ${
+        aria-label="Upload source data file by drag and drop or clicking to browse"
+        className={`w-full py-6 px-4 rounded-xl border border-dashed text-center cursor-pointer transition-all duration-200 btn-tactile focus-ring ${
           dragActive
             ? 'border-electricIndigo bg-indigo-500/10 dark:bg-indigo-500/5'
             : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-slate-50/20 dark:bg-slate-900/10'
@@ -109,7 +111,7 @@ const FileUploader = () => {
             </p>
           </div>
         </div>
-      </div>
+      </button>
 
       {status.message && (
         <div className={`mt-3 p-3 rounded-lg border text-xs flex items-start space-x-2 ${
