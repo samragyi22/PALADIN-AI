@@ -1,25 +1,41 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
 import { ApiProvider } from './context/ApiContext';
-import Sidebar from './components/Sidebar';
-import ChatWindow from './components/ChatWindow';
-import ChartRenderer from './components/ChartRenderer';
+import { ProtectedRoute, PublicOnlyRoute } from './components/ProtectedRoute';
+import { Login } from './pages/Login';
+import { Signup } from './pages/Signup';
+import { Dashboard } from './pages/Dashboard';
+import { LandingPage } from './pages/LandingPage';
+import { WorkspaceConsole } from './pages/WorkspaceConsole';
 
 function App() {
-  const [sidebarOpen, setSidebarOpen] = useState(true);
-
   return (
-    <ApiProvider>
-      <div className="flex h-screen w-screen overflow-hidden bg-slate-50 dark:bg-darkBg">
-        {/* Sidebar (Column 1) */}
-        <Sidebar isOpen={sidebarOpen} toggleSidebar={() => setSidebarOpen(!sidebarOpen)} />
-        
-        {/* Main Workspace: Chat (Column 2) */}
-        <ChatWindow />
-        
-        {/* Right Panel: Analytics Chart (Column 3) */}
-        <ChartRenderer />
-      </div>
-    </ApiProvider>
+    <AuthProvider>
+      <ApiProvider>
+        <BrowserRouter>
+          <Routes>
+            {/* Public Landing Page */}
+            <Route path="/" element={<LandingPage />} />
+
+            {/* Public Auth Routes */}
+            <Route element={<PublicOnlyRoute />}>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+            </Route>
+
+            {/* Protected Routes */}
+            <Route element={<ProtectedRoute />}>
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/workspace" element={<WorkspaceConsole />} />
+            </Route>
+
+            {/* Default Fallback */}
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </BrowserRouter>
+      </ApiProvider>
+    </AuthProvider>
   );
 }
 

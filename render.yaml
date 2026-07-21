@@ -1,0 +1,56 @@
+# =============================================================================
+# Enterprise AI Analyst — Render Blueprint
+# =============================================================================
+# This file auto-configures your Render deployment.
+# Just connect your GitHub repo on render.com and this file does the rest.
+# =============================================================================
+
+services:
+  - type: web
+    name: enterprise-ai-analyst
+    runtime: docker
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /health
+
+    # Render free tier settings
+    plan: free
+
+    envVars:
+      # ── LLM Configuration ──────────────────────────────────────────────────
+      - key: LLM_PROVIDER
+        value: groq
+
+      - key: EMBEDDING_PROVIDER
+        value: cohere
+
+      # ── API Keys (set real values in Render Dashboard → Environment) ────────
+      - key: GROQ_API_KEY
+        sync: false
+
+      - key: COHERE_API_KEY
+        sync: false
+
+      - key: GOOGLE_API_KEY
+        sync: false
+
+      - key: OPENAI_API_KEY
+        sync: false
+
+      - key: HF_API_KEY
+        sync: false
+
+      # ── CORS (update after first deploy with your actual Render URL) ────────
+      - key: ALLOWED_ORIGINS
+        value: "*"
+
+      # ── Storage ──────────────────────────────────────────────────────────────
+      - key: DATA_DIR
+        value: /data
+
+      # ── Server ───────────────────────────────────────────────────────────────
+      - key: ENV
+        value: production
+
+      - key: HOST
+        value: "0.0.0.0"
