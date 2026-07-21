@@ -62,7 +62,13 @@ import os
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 
-frontend_dist_path = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend/dist"))
+# Resolve the frontend dist path
+# Docker structure:  /app/app/main.py  →  /app/frontend/dist  (2 levels up)
+# Local structure:   .../backend/app/main.py  →  .../frontend/dist  (3 levels up)
+_two_up   = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend/dist"))
+_three_up = os.path.abspath(os.path.join(os.path.dirname(os.path.dirname(os.path.dirname(__file__))), "frontend/dist"))
+# Prefer Docker path (/app/frontend/dist); fall back to local path
+frontend_dist_path = _two_up if os.path.exists(_two_up) else _three_up
 
 if os.path.exists(frontend_dist_path):
     app.mount("/", StaticFiles(directory=frontend_dist_path, html=True), name="frontend")
