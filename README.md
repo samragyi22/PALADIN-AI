@@ -12,6 +12,8 @@
 
 ### 🌐 [**→ Try the Live Demo: enterprise-ai-analyst.onrender.com**](https://enterprise-ai-analyst.onrender.com)
 
+⚠️ Note: The free tier instance spins down after 15 minutes of inactivity. First request may take 30–60 seconds to wake up.
+
 ---
 
 ## 📖 Table of Contents
