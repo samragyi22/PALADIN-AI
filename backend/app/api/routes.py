@@ -1,6 +1,8 @@
-from fastapi import APIRouter, File, UploadFile, HTTPException, Query, BackgroundTasks, status
+from fastapi import APIRouter, File, UploadFile, HTTPException, Query, BackgroundTasks, status, Depends
 from fastapi.responses import StreamingResponse
 from app.api.schemas import ChatRequest, ChatResponse, UploadResponse, Citation
+from app.api.auth import get_current_user
+from app.database.models import User
 from app.config import settings
 from app.core.rag import extract_text_from_pdf_with_ocr, extract_text_from_docx, chunk_documents, add_documents_to_store, perform_ocr_on_image
 from app.core.sql import sanitize_table_name, ingest_csv_to_sqlite
@@ -77,7 +79,11 @@ async def process_file_background(file_id: str, file_path: str, filename: str, e
         processing_statuses[file_id]["error"] = str(e)
 
 @router.post("/upload", response_model=UploadResponse, status_code=status.HTTP_202_ACCEPTED)
-async def upload_file(background_tasks: BackgroundTasks, file: UploadFile = File(...)):
+async def upload_file(
+    background_tasks: BackgroundTasks, 
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user)
+):
     """
     Upload file endpoint. Saves uploaded file and queues background parsing.
     """
@@ -133,7 +139,10 @@ async def upload_file(background_tasks: BackgroundTasks, file: UploadFile = File
     )
 
 @router.get("/upload/status/{file_id}")
-async def get_upload_status(file_id: str):
+async def get_upload_status(
+    file_id: str,
+    current_user: User = Depends(get_current_user)
+):
     """
     Endpoint for frontend polling to check the processing state of an uploaded file.
     """
@@ -142,7 +151,10 @@ async def get_upload_status(file_id: str):
     return processing_statuses[file_id]
 
 @router.get("/session/{session_id}")
-async def get_session_history(session_id: str):
+async def get_session_history(
+    session_id: str,
+    current_user: User = Depends(get_current_user)
+):
     """
     Retrieve the historical messages/logs for a given session ID to reload in the frontend.
     """
@@ -150,7 +162,10 @@ async def get_session_history(session_id: str):
     return {"session_id": session_id, "history": history}
 
 @router.post("/chat", response_model=ChatResponse)
-async def chat(request: ChatRequest):
+async def chat(
+    request: ChatRequest,
+    current_user: User = Depends(get_current_user)
+):
     """
     Submit a query and execute the LangGraph state machine workflow.
     """
@@ -211,7 +226,10 @@ async def chat(request: ChatRequest):
         )
 
 @router.get("/export-pdf")
-async def export_pdf(session_id: str = Query(..., description="The session ID to export report for")):
+async def export_pdf(
+    session_id: str = Query(..., description="The session ID to export report for"),
+    current_user: User = Depends(get_current_user)
+):
     """
     Generate and download a PDF report containing the query and response logs.
     """
@@ -243,7 +261,10 @@ async def export_pdf(session_id: str = Query(..., description="The session ID to
         )
 
 @router.post("/transcribe")
-async def transcribe_audio(file: UploadFile = File(...)):
+async def transcribe_audio(
+    file: UploadFile = File(...),
+    current_user: User = Depends(get_current_user)
+):
     """
     Transcribe uploaded audio file using Groq Whisper-large-v3-turbo model.
     """

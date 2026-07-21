@@ -2,6 +2,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.api.routes import router as api_router
 from app.config import settings
+import os
 
 app = FastAPI(
     title="Enterprise AI Analyst API",
@@ -10,16 +11,50 @@ app = FastAPI(
 )
 
 # Configure CORS
-# In production, specify the actual frontend origins instead of ["*"]
+# ALLOWED_ORIGINS env var: comma-separated list of allowed origins.
+# e.g. "https://enterprise-ai-analyst.onrender.com"
+# Defaults to "*" for local development only.
+_raw_origins = os.environ.get("ALLOWED_ORIGINS", "*")
+if _raw_origins == "*":
+    _allowed_origins = ["*"]
+else:
+    _allowed_origins = [o.strip() for o in _raw_origins.split(",") if o.strip()]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],
+    allow_origins=_allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+from fastapi.responses import JSONResponse
+from fastapi import Request
+
+from app.api.auth import router as auth_router
+
+@app.middleware("http")
+async def csrf_validation_middleware(request: Request, call_next):
+    """
+    CSRF Double Submit Cookie Middleware.
+    For state-changing requests (POST, PUT, DELETE, PATCH), if a csrf_token cookie is present,
+    validates that X-CSRF-Token header matches csrf_token cookie.
+    Excludes public auth endpoints (/api/auth/login, /api/auth/signup).
+    """
+    if request.method in ["POST", "PUT", "DELETE", "PATCH"]:
+        path = request.url.path
+        if not path.startswith("/api/auth/login") and not path.startswith("/api/auth/signup"):
+            csrf_cookie = request.cookies.get("csrf_token")
+            csrf_header = request.headers.get("X-CSRF-Token")
+            if csrf_cookie and (not csrf_header or csrf_header != csrf_cookie):
+                return JSONResponse(
+                    status_code=403,
+                    content={"detail": "CSRF validation failed: X-CSRF-Token header does not match csrf_token cookie."}
+                )
+    return await call_next(request)
+
 # Include API routes
+app.include_router(auth_router)
 app.include_router(api_router)
 
 # Check if front-end production build folder exists and serve it
