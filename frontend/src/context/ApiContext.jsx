@@ -4,6 +4,22 @@ import axios from 'axios';
 // Set global API base URL for deployment environments (split backend/frontend)
 axios.defaults.baseURL = import.meta.env.VITE_API_BASE_URL || '';
 
+// Auto-attach X-CSRF-Token header from the csrf_token cookie on every
+// state-changing request. This satisfies the backend CSRF double-submit check
+// without manually threading the token through every component.
+axios.interceptors.request.use((config) => {
+  const method = (config.method || '').toLowerCase();
+  if (['post', 'put', 'delete', 'patch'].includes(method)) {
+    const match = document.cookie.match(/(^|;\s*)csrf_token=([^;]+)/);
+    const token = match ? decodeURIComponent(match[2]) : null;
+    if (token) {
+      config.headers = config.headers || {};
+      config.headers['X-CSRF-Token'] = token;
+    }
+  }
+  return config;
+});
+
 
 export const ApiContext = createContext();
 
