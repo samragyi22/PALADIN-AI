@@ -1,4 +1,4 @@
-# 🏢 Enterprise AI Analyst
+# 🛡️ PALADIN AI — Autonomous Enterprise Intelligence Guardian
 
 [![Python Version](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
 [![Node.js Version](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
@@ -8,7 +8,7 @@
 [![Orchestration: LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
 [![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Render-blueviolet)](https://enterprise-ai-analyst.onrender.com)
 
-> **Tagline:** An agentic, multi-modal enterprise intelligence console that queries, analyzes, and visualizes unstructured documents (PDF, DOCX) and structured databases (CSV, SQLite) simultaneously using natural language.
+> **Tagline:** An autonomous, multi-modal enterprise intelligence guardian that queries, analyzes, and visualizes unstructured documents (PDF, DOCX) and structured databases (CSV, SQLite) simultaneously using natural language.
 
 ### 🌐 [**→ Try the Live Demo: enterprise-ai-analyst.onrender.com**](https://enterprise-ai-analyst.onrender.com)
 
