@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Visual Craft Upgrade Preview — Dashboard & Landing Page</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #0B0F19;
+      color: #F8FAFC;
+    }
+    .glass-premium {
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .glass-card {
+      background: rgba(30, 41, 59, 0.4);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .glass-card:hover {
+      background: rgba(30, 41, 59, 0.7);
+      border-color: rgba(99, 102, 241, 0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(99, 102, 241, 0.12);
+    }
+    .stat-divider {
+      border-right: 1px solid rgba(255, 255, 255, 0.08);
+    }
+  </style>
+</head>
+<body class="p-6 sm:p-12 min-h-screen selection:bg-indigo-500 selection:text-white">
+  <!-- Glow Backdrop -->
+  <div class="fixed top-0 left-1/3 -translate-x-1/2 w-[600px] h-[600px] bg-indigo-600/10 rounded-full blur-[140px] pointer-events-none"></div>
+  <div class="fixed top-1/2 right-10 w-[400px] h-[400px] bg-teal-500/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+  <div class="max-w-6xl mx-auto space-y-16 relative z-10">
+    
+    <!-- Title Badge -->
+    <div className="flex items-center justify-between border-b border-slate-800 pb-6">
+      <div>
+        <span class="px-3 py-1 text-xs font-semibold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 border border-indigo-500/20 rounded-full">
+          Visual Craft Upgrade Preview
+        </span>
+        <h1 class="text-3xl font-black text-white mt-2 tracking-tight">Enterprise AI Analyst — Proposed Design Direction</h1>
+      </div>
+      <p class="text-xs text-slate-400">Comparing Restructured Dashboard & Feature Matrix Layouts</p>
+    </div>
+
+    <!-- SECTION 1: PROPOSED DASHBOARD RESTRUCTURE -->
+    <section class="space-y-8">
+      <div class="flex items-baseline justify-between border-l-2 border-indigo-500 pl-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-white">1. Dashboard: Hero & Integrated Stat Console</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Replaces 3 identical icon-in-box cards with a unified multi-plane stat console and varied typographic hierarchy.</p>
+        </div>
+        <span class="text-[11px] font-mono text-indigo-300">Dashboard.jsx</span>
+      </div>
+
+      <!-- Hero Card with Layered Depth -->
+      <div class="glass-premium rounded-3xl p-8 sm:p-10 relative overflow-hidden">
+        <!-- Radial Ambient Glow -->
+        <div class="absolute -right-10 -bottom-10 w-72 h-72 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+        
+        <div class="max-w-2xl space-y-5 relative z-10">
+          <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-indigo-500/10 border border-indigo-500/20 text-indigo-300 text-xs font-semibold">
+            <span class="h-2 w-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            Agentic Intelligence Workspace
+          </div>
+
+          <h1 class="text-4xl sm:text-5xl font-black tracking-tight text-white leading-tight">
+            Welcome back, <span class="bg-clip-text text-transparent bg-gradient-to-r from-indigo-300 via-indigo-200 to-indigo-400">Kartik</span> 👋
+          </h1>
+
+          <p class="text-sm text-slate-300 leading-relaxed font-normal">
+            Query unstructured documents (PDF, DOCX) and structured databases (CSV, SQLite) simultaneously using natural language.
+          </p>
+
+          <div class="pt-3 flex items-center gap-4">
+            <button class="px-6 py-3 bg-gradient-to-r from-indigo-600 to-indigo-500 hover:from-indigo-500 hover:to-indigo-400 text-white font-semibold text-sm rounded-xl shadow-lg shadow-indigo-500/25 transition-all flex items-center gap-2">
+              <span>Launch AI Analyst Workspace</span>
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/></svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- Integrated Stat Console Bar (Replacing Identical Duplicate Cards) -->
+        <div class="mt-10 pt-8 border-t border-white/10 grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-0">
+          
+          <!-- Stat 1: Primary Focal Point -->
+          <div class="sm:pr-8 stat-divider flex flex-col justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-indigo-400"></span> Active Sessions
+            </span>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 to-indigo-100">3</span>
+              <span class="text-xs text-indigo-400 font-semibold">Active turns</span>
+            </div>
+          </div>
+
+          <!-- Stat 2: Teal Accent -->
+          <div class="sm:px-8 stat-divider flex flex-col justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-teal-400"></span> Indexed Documents
+            </span>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-teal-300 to-teal-100">12</span>
+              <span class="text-xs text-teal-400 font-semibold">PDF & CSV Files</span>
+            </div>
+          </div>
+
+          <!-- Stat 3: Coral Accent -->
+          <div class="sm:pl-8 flex flex-col justify-between">
+            <span class="text-[11px] font-bold text-slate-400 uppercase tracking-widest flex items-center gap-1.5">
+              <span class="h-1.5 w-1.5 rounded-full bg-orange-400"></span> Total Queries Run
+            </span>
+            <div class="mt-2 flex items-baseline gap-2">
+              <span class="text-4xl font-black text-transparent bg-clip-text bg-gradient-to-r from-orange-300 to-orange-100">27</span>
+              <span class="text-xs text-orange-400 font-semibold">RAG & SQL turns</span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Custom SVG Composition Empty State (Replacing Large Scaled Icon) -->
+      <div class="space-y-4 pt-4">
+        <h3 class="text-lg font-extrabold text-white tracking-tight flex items-center gap-2">
+          <span>Recent Intelligence Sessions</span>
+          <span class="text-xs text-slate-500 font-normal">(Custom SVG Empty State Preview)</span>
+        </h3>
+
+        <div class="glass-card rounded-2xl p-10 text-center space-y-5 relative overflow-hidden">
+          <!-- Custom Vector Illustration Composition -->
+          <div class="mx-auto w-24 h-24 relative flex items-center justify-center">
+            <svg class="w-full h-full text-indigo-500/30" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="50" cy="50" r="40" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <rect x="30" y="25" width="40" height="50" rx="8" fill="#1E293B" stroke="#6366F1" stroke-width="1.5"/>
+              <path d="M40 38H60M40 46H52M40 54H56" stroke="#94A3B8" stroke-width="2" stroke-linecap="round"/>
+              <circle cx="65" cy="65" r="14" fill="#6366F1" fill-opacity="0.2" stroke="#818CF8" stroke-width="1.5"/>
+              <path d="M60 65L64 69L71 61" stroke="#818CF8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+
+          <div class="space-y-1.5 max-w-sm mx-auto">
+            <h4 class="text-base font-bold text-white tracking-tight">No active intelligence sessions yet</h4>
+            <p class="text-xs text-slate-400 leading-relaxed">
+              Upload a document (PDF, DOCX) or ingest a CSV dataset to trigger your first agentic analysis pipeline.
+            </p>
+          </div>
+
+          <button class="px-5 py-2.5 bg-indigo-600/90 hover:bg-indigo-500 text-white font-semibold text-xs rounded-xl shadow-md transition-all inline-flex items-center gap-2">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+            <span>Start Your First Analysis</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: PROPOSED LANDING PAGE FEATURE MATRIX -->
+    <section class="space-y-8 pt-8 border-t border-slate-800">
+      <div class="flex items-baseline justify-between border-l-2 border-teal-500 pl-4">
+        <div>
+          <h2 class="text-xl font-extrabold text-white">2. Landing Page: Multi-Accent Layered Feature Matrix</h2>
+          <p class="text-xs text-slate-400 mt-0.5">Restructures generic icon-in-box feature cards into color-coded glassmorphic modules with hover depth.</p>
+        </div>
+        <span class="text-[11px] font-mono text-teal-300">LandingPage.jsx</span>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        
+        <!-- Module 1: Indigo Accent -->
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold font-mono tracking-wider text-indigo-400 uppercase">Module 01</span>
+            <span class="h-2 w-2 rounded-full bg-indigo-400 group-hover:animate-ping"></span>
+          </div>
+          <h4 class="text-base font-extrabold text-white group-hover:text-indigo-300 transition-colors">Hybrid Document RAG</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Combines ChromaDB vector retrieval, BM25 keyword matching, and PyTesseract OCR extraction for PDF and DOCX files.
+          </p>
+          <div class="pt-2 text-[11px] font-semibold text-indigo-400 flex items-center gap-1">
+            <span>Learn architecture</span>
+            <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Module 2: Teal Accent -->
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold font-mono tracking-wider text-teal-400 uppercase">Module 02</span>
+            <span class="h-2 w-2 rounded-full bg-teal-400 group-hover:animate-ping"></span>
+          </div>
+          <h4 class="text-base font-extrabold text-white group-hover:text-teal-300 transition-colors">Dual SQL & AST Guardian</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Natural language text-to-SQL generation verified against AST security parsers to prevent destructive database queries.
+          </p>
+          <div class="pt-2 text-[11px] font-semibold text-teal-400 flex items-center gap-1">
+            <span>Security specs</span>
+            <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Module 3: Coral Accent -->
+        <div class="glass-card rounded-2xl p-6 space-y-4 relative overflow-hidden group">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-extrabold font-mono tracking-wider text-orange-400 uppercase">Module 03</span>
+            <span class="h-2 w-2 rounded-full bg-orange-400 group-hover:animate-ping"></span>
+          </div>
+          <h4 class="text-base font-extrabold text-white group-hover:text-orange-300 transition-colors">Automated Charting</h4>
+          <p class="text-xs text-slate-400 leading-relaxed">
+            Auto-detects numeric series to synthesize dynamic Recharts configurations (Bar, Line, Area, Pie) with theme palettes.
+          </p>
+          <div class="pt-2 text-[11px] font-semibold text-orange-400 flex items-center gap-1">
+            <span>Chart engine</span>
+            <svg class="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </div>
+</body>
+</html>
