@@ -83,10 +83,10 @@ const FileUploader = () => {
         onDrop={handleDrop}
         onClick={onButtonClick}
         aria-label="Upload source data file by drag and drop or clicking to browse"
-        className={`w-full py-6 px-4 rounded-xl border border-dashed text-center cursor-pointer transition-all duration-200 btn-tactile focus-ring ${
+        className={`w-full py-5 px-4 rounded-2xl border border-dashed text-center cursor-pointer transition-all duration-200 btn-tactile focus-ring ${
           dragActive
-            ? 'border-electricIndigo bg-indigo-500/10 dark:bg-indigo-500/5'
-            : 'border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 bg-slate-50/20 dark:bg-slate-900/10'
+            ? 'border-violet-500 bg-violet-500/15'
+            : 'border-white/[0.1] hover:border-violet-500/40 bg-white/[0.02] hover:bg-white/[0.04]'
         }`}
       >
         <input
@@ -99,14 +99,14 @@ const FileUploader = () => {
         />
         
         <div className="flex flex-col items-center justify-center space-y-2">
-          <div className="p-2 rounded-lg bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-slate-600 dark:group-hover:text-slate-200 transition-colors">
-            <Upload size={18} className={isUploading ? 'animate-bounce text-electricIndigo' : ''} />
+          <div className="p-2.5 rounded-xl bg-violet-500/10 border border-violet-500/20 text-violet-400">
+            <Upload size={16} className={isUploading ? 'animate-bounce text-amber-400' : ''} />
           </div>
           <div>
-            <p className="text-xs font-semibold text-slate-600 dark:text-slate-300">
+            <p className="text-xs font-bold text-slate-200">
               Drag & Drop file
             </p>
-            <p className="text-[10px] text-slate-400 dark:text-slate-500 mt-0.5">
+            <p className="text-[10px] text-slate-500 mt-0.5 font-medium">
               PDF, DOCX, CSV, SQLite, or Image
             </p>
           </div>
@@ -114,12 +114,12 @@ const FileUploader = () => {
       </button>
 
       {status.message && (
-        <div className={`mt-3 p-3 rounded-lg border text-xs flex items-start space-x-2 ${
+        <div className={`mt-3 p-3 rounded-xl border text-xs flex items-start space-x-2 animate-fade-in ${
           status.type === 'error' 
-            ? 'bg-rose-500/10 border-rose-500/20 text-rose-500 dark:text-rose-400' 
+            ? 'bg-rose-500/10 border-rose-500/20 text-rose-400' 
             : status.type === 'success'
-              ? 'bg-teal-500/10 border-teal-500/20 text-teal-600 dark:text-teal-400'
-              : 'bg-indigo-500/10 border-indigo-500/20 text-indigo-600 dark:text-indigo-400'
+              ? 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+              : 'bg-violet-500/10 border-violet-500/20 text-violet-300'
         }`}>
           <div className="mt-0.5 shrink-0">
             {status.type === 'error' && <AlertCircle size={14} />}

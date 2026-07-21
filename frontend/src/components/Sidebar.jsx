@@ -10,7 +10,9 @@ import {
   MessageSquare,
   ChevronLeft,
   ChevronRight,
-  HardDrive
+  HardDrive,
+  Bot,
+  Sparkles
 } from 'lucide-react';
 import FileUploader from './FileUploader';
 
@@ -28,34 +30,39 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
 
   return (
     <div 
-      className={`glass-premium h-screen drawer-transition flex flex-col z-20 border-r border-slate-200/50 dark:border-slate-800/50 ${
+      className={`h-screen drawer-transition flex flex-col z-20 border-r border-violet-900/30 bg-[#0a0818]/95 backdrop-blur-2xl ${
         isOpen ? 'w-80' : 'w-16'
       }`}
     >
       {/* Header */}
-      <div className="p-4 flex items-center justify-between border-b border-slate-200/50 dark:border-slate-800/50">
+      <div className="p-4 flex items-center justify-between border-b border-white/[0.06]">
         {isOpen ? (
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-electricIndigo to-routePurple flex items-center justify-center font-bold text-white shadow-lg shadow-electricIndigo/30">
-              EA
+          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.href = '/'}>
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-900/50">
+              <Bot className="h-5 w-5 text-white" />
             </div>
             <div>
-              <h1 className="text-sm font-bold text-slate-800 dark:text-slate-100 leading-none">Enterprise AI</h1>
-              <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold tracking-wider uppercase">Analyst Console</span>
+              <h1 className="text-sm font-black text-white leading-none tracking-tight">Enterprise AI</h1>
+              <span className="text-[10px] text-violet-400 font-bold tracking-widest uppercase mt-1 block">Analyst Console</span>
             </div>
           </div>
         ) : (
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-tr from-electricIndigo to-routePurple flex items-center justify-center font-bold text-white mx-auto shadow-md">
-            EA
+          <div 
+            className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 flex items-center justify-center font-bold text-white mx-auto shadow-lg shadow-violet-900/50 cursor-pointer"
+            onClick={() => window.location.href = '/'}
+            title="Enterprise AI Analyst"
+          >
+            <Bot className="h-5 w-5 text-white" />
           </div>
         )}
         
         {isOpen && (
           <button 
             onClick={toggleSidebar}
-            className="p-1 rounded-md hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 btn-tactile focus-ring"
+            className="p-1.5 rounded-lg hover:bg-white/[0.06] text-slate-400 hover:text-white btn-tactile focus-ring"
+            title="Collapse Sidebar"
           >
-            <ChevronLeft size={18} />
+            <ChevronLeft size={16} />
           </button>
         )}
       </div>
@@ -65,15 +72,15 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {isOpen ? (
           <button
             onClick={startNewSession}
-            className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white font-medium shadow-md shadow-electricIndigo/20 hover:shadow-lg text-sm btn-tactile focus-ring"
+            className="w-full flex items-center justify-center space-x-2 py-2.5 px-4 rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 hover:from-violet-500 hover:to-violet-400 text-white font-bold text-xs shadow-lg shadow-violet-900/40 hover:shadow-violet-900/60 btn-tactile focus-ring"
           >
             <Plus size={16} />
-            <span>New Session</span>
+            <span>New Analysis Session</span>
           </button>
         ) : (
           <button
             onClick={startNewSession}
-            className="w-10 h-10 rounded-xl bg-electricIndigo hover:bg-indigo-600 text-white flex items-center justify-center mx-auto shadow-md btn-tactile focus-ring"
+            className="w-10 h-10 rounded-xl bg-gradient-to-r from-violet-600 to-violet-500 text-white flex items-center justify-center mx-auto shadow-lg shadow-violet-900/40 btn-tactile focus-ring"
             title="New Session"
           >
             <Plus size={18} />
@@ -87,9 +94,9 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         <div>
           {isOpen ? (
             <div>
-              <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2 flex items-center space-x-1.5">
-                <HardDrive size={12} />
-                <span>Upload Sources</span>
+              <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 flex items-center space-x-1.5">
+                <HardDrive size={12} className="text-violet-400" />
+                <span>Upload Data Sources</span>
               </h3>
               <FileUploader />
             </div>
@@ -97,7 +104,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <div className="flex justify-center">
               <button 
                 onClick={toggleSidebar}
-                className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center justify-center"
+                className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-white flex items-center justify-center"
                 title="Upload Source File"
               >
                 <Plus size={18} />
@@ -109,8 +116,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Conversations History List */}
         {isOpen ? (
           <div>
-            <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2.5 flex items-center space-x-1.5">
-              <MessageSquare size={12} />
+            <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 flex items-center space-x-1.5">
+              <MessageSquare size={12} className="text-amber-400" />
               <span>Conversation History</span>
             </h3>
             <div className="space-y-1.5 max-h-48 overflow-y-auto pr-1">
@@ -121,8 +128,8 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                     key={sessId}
                     className={`group flex items-center justify-between p-1 rounded-xl border text-xs transition-all duration-150 ${
                       isActive
-                        ? 'bg-indigo-500/10 border-indigo-500/30 text-electricIndigo font-bold shadow-sm'
-                        : 'bg-slate-50/50 dark:bg-slate-900/30 border-slate-100/60 dark:border-slate-800/80 text-slate-600 dark:text-slate-400 hover:bg-slate-100/50 dark:hover:bg-slate-800/40 hover:border-slate-200 dark:hover:border-slate-700'
+                        ? 'bg-violet-500/15 border-violet-500/40 text-violet-300 font-bold shadow-sm'
+                        : 'bg-white/[0.02] border-white/[0.05] text-slate-400 hover:bg-white/[0.05] hover:border-white/[0.1] hover:text-white'
                     }`}
                   >
                     <button
@@ -131,7 +138,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                       className="flex-1 flex items-center space-x-2 truncate p-1.5 text-left btn-tactile focus-ring rounded-lg"
                       aria-label={`Switch to session ${sessId.replace('session_', '')}`}
                     >
-                      <MessageSquare size={13} className={isActive ? 'text-electricIndigo shrink-0' : 'text-slate-400 shrink-0'} />
+                      <MessageSquare size={13} className={isActive ? 'text-amber-400 shrink-0' : 'text-slate-500 shrink-0'} />
                       <span className="truncate max-w-[140px] font-mono text-[10px]">
                         {sessId.replace('session_', 'Session: ')}
                       </span>
@@ -142,7 +149,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                         e.stopPropagation();
                         deleteSession(sessId);
                       }}
-                      className="p-1.5 rounded-lg text-slate-400 hover:text-rose-500 dark:hover:text-rose-400 hover:bg-slate-200/50 dark:hover:bg-slate-800/60 opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-150 btn-tactile focus-ring"
+                      className="p-1.5 rounded-lg text-slate-500 hover:text-rose-400 hover:bg-white/[0.06] opacity-0 group-hover:opacity-100 focus:opacity-100 transition-all duration-150 btn-tactile focus-ring"
                       aria-label={`Delete conversation session ${sessId.replace('session_', '')}`}
                       title="Delete Conversation"
                     >
@@ -157,7 +164,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
           <div className="flex justify-center">
             <button
               onClick={toggleSidebar}
-              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-white/[0.03] border border-white/[0.08] text-slate-400 hover:text-white flex items-center justify-center"
               title="View Chat Sessions"
             >
               <MessageSquare size={18} />
@@ -168,12 +175,12 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
         {/* Uploaded Files Inventory */}
         {isOpen && (
           <div>
-            <h3 className="text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2.5">
-              Source Inventory ({uploadedFiles.length})
+            <h3 className="text-[10px] font-bold text-slate-500 uppercase tracking-widest mb-2.5 flex items-center space-x-1.5">
+              <span>Source Inventory ({uploadedFiles.length})</span>
             </h3>
             
             {uploadedFiles.length === 0 ? (
-              <p className="text-xs text-slate-400 dark:text-slate-500 italic p-3 rounded-lg border border-dashed border-slate-200 dark:border-slate-800 text-center">
+              <p className="text-xs text-slate-500 italic p-3 rounded-xl border border-dashed border-white/[0.08] bg-white/[0.01] text-center">
                 No active source data uploaded.
               </p>
             ) : (
@@ -181,20 +188,20 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
                 {uploadedFiles.map((file) => (
                   <div 
                     key={file.id} 
-                    className="p-2.5 rounded-xl bg-slate-50/50 dark:bg-slate-900/30 border border-slate-100 dark:border-slate-800/80 flex items-start space-x-2.5 transition-all duration-200 hover:border-slate-200 dark:hover:border-slate-700"
+                    className="p-2.5 rounded-xl bg-white/[0.03] border border-white/[0.06] flex items-start space-x-2.5 transition-all duration-200 hover:border-violet-500/30"
                   >
                     <div className="mt-0.5">
                       {file.type === 'CSV' || file.type === 'SQLITE' || file.type === 'DB' ? (
-                        <Database size={16} className="text-routeCoral" />
+                        <Database size={16} className="text-amber-400" />
                       ) : (
-                        <FileText size={16} className="text-routeTeal" />
+                        <FileText size={16} className="text-violet-400" />
                       )}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-xs font-medium text-slate-700 dark:text-slate-300 truncate" title={file.name}>
+                      <p className="text-xs font-semibold text-slate-200 truncate" title={file.name}>
                         {file.name}
                       </p>
-                      <span className="text-[10px] text-slate-400 dark:text-slate-500 font-semibold">
+                      <span className="text-[10px] text-slate-500 font-medium">
                         {file.type} • {file.size}
                       </span>
                     </div>
@@ -207,10 +214,10 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       </div>
 
       {/* Footer Settings & Toggles */}
-      <div className="p-4 border-t border-slate-200/50 dark:border-slate-800/50 flex flex-col space-y-3">
+      <div className="p-4 border-t border-white/[0.06] flex flex-col space-y-3">
         {isOpen ? (
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-xs text-slate-400 dark:text-slate-500">
+            <div className="flex items-center space-x-2 text-xs text-slate-500">
               <MessageSquare size={14} />
               <span className="truncate w-36 font-mono text-[10px]">{sessionId}</span>
             </div>
@@ -218,7 +225,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <button 
               type="button"
               onClick={toggleTheme}
-              className="p-2 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 btn-tactile focus-ring"
+              className="p-2 rounded-xl bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] hover:text-white btn-tactile focus-ring"
               aria-label={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
               {theme === 'dark' ? <Sun size={16} /> : <Moon size={16} />}
@@ -229,7 +236,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <button 
               type="button"
               onClick={toggleTheme}
-              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 btn-tactile focus-ring flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] hover:text-white btn-tactile focus-ring flex items-center justify-center"
               aria-label={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
               title={theme === 'dark' ? "Switch to Light Mode" : "Switch to Dark Mode"}
             >
@@ -238,7 +245,7 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
             <button 
               type="button"
               onClick={toggleSidebar}
-              className="w-10 h-10 rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 btn-tactile focus-ring flex items-center justify-center"
+              className="w-10 h-10 rounded-xl bg-white/[0.04] text-slate-400 hover:text-white btn-tactile focus-ring flex items-center justify-center"
               aria-label="Expand Sidebar"
             >
               <ChevronRight size={18} />
