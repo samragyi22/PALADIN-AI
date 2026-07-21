@@ -1,15 +1,16 @@
 # 🏢 Enterprise AI Analyst
 
-[![Python Version](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Node.js Version](https://img.shields.io/badge/Node.js-18%2B-green.svg)](https://nodejs.org/)
-[![FastAPI](https://img.shields.io/badge/FastAPI-0.100%2B-009688.svg)](https://fastapi.tiangolo.com/)
-[![React](https://img.shields.io/badge/React-18%2B-61DAFB.svg)](https://react.dev/)
+[![Python Version](https://img.shields.io/badge/Python-3.11%2B-blue.svg)](https://www.python.org/)
+[![Node.js Version](https://img.shields.io/badge/Node.js-20%2B-green.svg)](https://nodejs.org/)
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110%2B-009688.svg)](https://fastapi.tiangolo.com/)
+[![React](https://img.shields.io/badge/React-19%2B-61DAFB.svg)](https://react.dev/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Orchestration: LangGraph](https://img.shields.io/badge/Orchestration-LangGraph-orange.svg)](https://github.com/langchain-ai/langgraph)
+[![Live Demo](https://img.shields.io/badge/🚀%20Live%20Demo-Render-blueviolet)](https://enterprise-ai-analyst.onrender.com)
 
 > **Tagline:** An agentic, multi-modal enterprise intelligence console that queries, analyzes, and visualizes unstructured documents (PDF, DOCX) and structured databases (CSV, SQLite) simultaneously using natural language.
 
-[Live Demo Console](https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst)
+### 🌐 [**→ Try the Live Demo: enterprise-ai-analyst.onrender.com**](https://enterprise-ai-analyst.onrender.com)
 
 ---
 
@@ -179,11 +180,19 @@ python3 tests/test_state_machine.py  # Verify LangGraph orchestration
 ---
 
 ## 🐳 Docker Deployment
+
+### Local Docker
 ```bash
 docker-compose up --build
 ```
-* Backend access: `http://localhost:8000`
-* Frontend access: `http://localhost:5173`
+* Backend + Frontend: `http://localhost:8000`
+
+### ☁️ Live Deployment (Render.com)
+The app is deployed and live at:
+
+> **🚀 [https://enterprise-ai-analyst.onrender.com](https://enterprise-ai-analyst.onrender.com)**
+
+> ⚠️ **Note:** The free tier instance spins down after 15 minutes of inactivity. First request may take 30–60 seconds to wake up.
 
 ---
 
