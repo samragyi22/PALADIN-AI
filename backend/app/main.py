@@ -57,6 +57,16 @@ async def csrf_validation_middleware(request: Request, call_next):
 app.include_router(auth_router)
 app.include_router(api_router)
 
+# Auto-create all database tables on startup (users, refresh_tokens, etc.)
+# This runs before any request is handled, ensuring the DB is ready.
+from app.database.session import engine
+from app.database import models as db_models
+
+@app.on_event("startup")
+async def create_tables():
+    db_models.Base.metadata.create_all(bind=engine)
+    print("[Startup] ✅ Database tables created/verified.")
+
 # Check if front-end production build folder exists and serve it
 import os
 from fastapi.staticfiles import StaticFiles
