@@ -11,10 +11,10 @@ import {
   ChevronLeft,
   ChevronRight,
   HardDrive,
-  Bot,
   Sparkles
 } from 'lucide-react';
 import FileUploader from './FileUploader';
+import { PaladinLogo } from './ui/PaladinLogo';
 
 const Sidebar = ({ isOpen, toggleSidebar }) => {
   const {
@@ -38,21 +38,19 @@ const Sidebar = ({ isOpen, toggleSidebar }) => {
       <div className="p-4 flex items-center justify-between border-b border-white/[0.06]">
         {isOpen ? (
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => window.location.href = '/'}>
-            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 flex items-center justify-center font-bold text-white shadow-lg shadow-violet-900/50">
-              <Bot className="h-5 w-5 text-white" />
-            </div>
+            <PaladinLogo size={28} />
             <div>
-              <h1 className="text-sm font-black text-white leading-none tracking-tight">Enterprise AI</h1>
-              <span className="text-[10px] text-violet-400 font-bold tracking-widest uppercase mt-1 block">Analyst Console</span>
+              <h1 className="text-sm font-black text-white leading-none tracking-tight">PALADIN AI</h1>
+              <span className="text-[10px] text-amber-400 font-bold tracking-widest uppercase mt-0.5 block">Intelligence Guardian</span>
             </div>
           </div>
         ) : (
           <div 
-            className="w-9 h-9 rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 flex items-center justify-center font-bold text-white mx-auto shadow-lg shadow-violet-900/50 cursor-pointer"
+            className="flex items-center justify-center mx-auto cursor-pointer"
             onClick={() => window.location.href = '/'}
-            title="Enterprise AI Analyst"
+            title="PALADIN AI"
           >
-            <Bot className="h-5 w-5 text-white" />
+            <PaladinLogo size={28} />
           </div>
         )}
         

@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { PaladinLogo } from '../components/ui/PaladinLogo';
 import {
   Bot, Sparkles, ArrowRight, ShieldCheck, FileText, BarChart3,
   Zap, Layers, Award, ChevronRight, Database, Mic,
@@ -93,11 +94,12 @@ const Navbar = ({ isAuthenticated, navigate }) => {
     }`}>
       <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
         {/* Logo */}
-        <div className="flex items-center gap-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 shadow-lg shadow-violet-900/50">
-            <Bot className="h-5 w-5 text-white" />
+        <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
+          <PaladinLogo size={32} />
+          <div>
+            <span className="text-base font-black text-white tracking-tight block leading-none">PALADIN AI</span>
+            <span className="text-[9px] font-bold text-amber-400 tracking-widest uppercase block mt-0.5">Intelligence Guardian</span>
           </div>
-          <span className="text-sm font-black text-white tracking-tight">Enterprise AI</span>
         </div>
 
         {/* Desktop Nav */}
@@ -189,14 +191,14 @@ const HeroSection = ({ isAuthenticated }) => {
 
         {/* Headline */}
         <h1 className="text-5xl sm:text-7xl lg:text-8xl font-black tracking-tight text-white leading-[1.02]">
-          Enterprise{' '}
-          <span className="bg-gradient-to-r from-violet-400 via-violet-300 to-violet-500 bg-clip-text text-transparent">
+          PALADIN{' '}
+          <span className="bg-gradient-to-r from-amber-400 via-amber-300 to-amber-500 bg-clip-text text-transparent">
             AI
           </span>{' '}
           <br className="hidden sm:block" />
           Intelligence{' '}
-          <span className="bg-gradient-to-r from-amber-400 to-amber-300 bg-clip-text text-transparent">
-            Console
+          <span className="bg-gradient-to-r from-violet-400 to-violet-300 bg-clip-text text-transparent">
+            Guardian
           </span>
         </h1>
 

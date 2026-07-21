@@ -3,6 +3,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import rehypeRaw from 'rehype-raw';
 import { ApiContext } from '../context/ApiContext';
+import { PaladinLogo } from './ui/PaladinLogo';
 import { 
   Send, 
   Download, 
@@ -234,15 +235,17 @@ const ChatWindow = () => {
 
       {/* Header */}
       <div className="h-16 px-6 border-b border-violet-900/30 bg-[#080710]/90 backdrop-blur-2xl flex items-center justify-between z-10">
-        <div>
-          <h2 className="text-sm font-bold text-white flex items-center space-x-2">
-            <BrainCircuit size={18} className="text-violet-400 glow-purple" />
-            <span>AI Analyst Workspace</span>
-          </h2>
-          <p className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase flex items-center gap-1.5 mt-0.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-            Active Multi-Agent Orchestration
-          </p>
+        <div className="flex items-center space-x-3">
+          <PaladinLogo size={24} />
+          <div>
+            <h2 className="text-sm font-bold text-white flex items-center space-x-2">
+              <span>PALADIN AI Intelligence Guardian</span>
+            </h2>
+            <p className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase flex items-center gap-1.5 mt-0.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              LangGraph State Machine Engine
+            </p>
+          </div>
         </div>
 
         <div className="flex items-center space-x-3">

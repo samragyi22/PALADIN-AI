@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { PaladinLogo } from '../components/ui/PaladinLogo';
 import axios from 'axios';
 import {
   Bot,
@@ -146,14 +147,12 @@ export const Dashboard = () => {
       <header className="sticky top-0 z-40 border-b border-violet-900/30 bg-[#080710]/90 backdrop-blur-2xl px-6 py-4">
         <div className="max-w-7xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-3 cursor-pointer" onClick={() => navigate('/')}>
-            <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-violet-600 to-violet-800 text-white shadow-lg shadow-violet-900/50">
-              <Bot className="h-6 w-6" />
-            </div>
+            <PaladinLogo size={32} />
             <div>
-              <h1 className="text-base font-bold text-white tracking-tight flex items-center gap-2">
-                Enterprise AI Analyst
+              <h1 className="text-base font-black text-white tracking-tight flex items-center gap-2">
+                PALADIN AI
                 <span className="px-2.5 py-0.5 text-[10px] font-bold bg-amber-500/15 text-amber-300 border border-amber-500/25 rounded-full">
-                  v1.2 Console
+                  v1.5 Guardian Console
                 </span>
               </h1>
             </div>
