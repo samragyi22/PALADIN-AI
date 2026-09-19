@@ -223,7 +223,7 @@ const HeroSection = ({ isAuthenticated }) => {
             {isAuthenticated ? 'Launch Console' : 'Get Started Free'}
             <ArrowRight className="h-4 w-4" />
           </Link>
-          <a href="https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst" target="_blank" rel="noopener noreferrer"
+          <a href="https://github.com/samragyi22/PALADIN-AI-" target="_blank" rel="noopener noreferrer"
             className="btn-tactile flex items-center gap-2 px-6 py-3.5 rounded-xl bg-white/[0.05] hover:bg-white/[0.09] border border-white/[0.12] text-slate-300 hover:text-white font-semibold text-sm transition-all">
             <Github className="h-4 w-4" /> GitHub
           </a>
@@ -843,9 +843,9 @@ const Footer = () => (
           <p className="text-xs text-slate-500 leading-relaxed max-w-xs">
             An agentic multi-modal intelligence console for querying documents and databases using natural language.
           </p>
-          <a href="https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst" target="_blank" rel="noopener noreferrer"
+          <a href="https://github.com/samragyi22/PALADIN-AI-" target="_blank" rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-xs text-slate-500 hover:text-violet-400 transition-colors">
-            <Github className="h-3.5 w-3.5" /> github.com/kartikbhardwaj1111
+            <Github className="h-3.5 w-3.5" /> github.com/samragyi22
           </a>
         </div>
 
@@ -854,8 +854,8 @@ const Footer = () => (
           {[
             { l: 'Live Demo', h: 'https://enterprise-ai-analyst.onrender.com' },
             { l: 'API Docs', h: 'https://enterprise-ai-analyst.onrender.com/docs' },
-            { l: 'GitHub', h: 'https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst' },
-            { l: 'CHANGELOG', h: 'https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst/blob/main/CHANGELOG.md' },
+            { l: 'GitHub', h: 'https://github.com/samragyi22/PALADIN-AI-' },
+            { l: 'CHANGELOG', h: 'https://github.com/samragyi22/PALADIN-AI-/blob/main/CHANGELOG.md' },
           ].map(({ l, h }) => (
             <a key={l} href={h} target="_blank" rel="noopener noreferrer" className="block text-xs text-slate-500 hover:text-violet-400 transition-colors">{l}</a>
           ))}

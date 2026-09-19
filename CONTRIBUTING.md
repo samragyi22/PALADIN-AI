@@ -29,8 +29,8 @@ main          ← Production (auto-deploys to Render.com)
 
 ```bash
 # 1. Fork and clone
-git clone https://github.com/kartikbhardwaj1111/Enterprise-AI-Analyst.git
-cd Enterprise-AI-Analyst
+git clone https://github.com/samragyi22/PALADIN-AI-.git
+cd PALADIN-AI-
 
 # 2. Create your feature branch FROM develop
 git checkout develop

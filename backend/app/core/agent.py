@@ -46,10 +46,10 @@ Rules:
 
 Example:
 History:
-User: Tell me about employee Kartik Bhardwaj.
-AI: Kartik Bhardwaj is a Software Engineer simulation candidate.
-Follow-up: What is his salary?
-Output: What is the salary of Kartik Bhardwaj?
+User: Tell me about employee Samragyi Sharma.
+AI: Samragyi Sharma is a Software Engineer simulation candidate.
+Follow-up: What is their salary?
+Output: What is the salary of Samragyi Sharma?
 """
     
     # Format history turns (last 3 turns to keep it fast)
@@ -275,7 +275,7 @@ async def merge_node(state: AgentState) -> Dict[str, Any]:
    - For **Policies/Contracts**: Group key clauses logically with bold headings.
 2. **Concise and Direct**: Answer the question immediately. Avoid conversational filler, intros (like "Based on the provided data...", "According to the PDF..."), or generic concluding remarks.
 3. **Beautiful Lists & Spacing**: Use clean bullet points. Indent nested details properly. Ensure there is clear spacing between sections so the output is easily readable.
-4. **Citations as Source Pills**: Cite your sources inline using the exact source file name in brackets, e.g., `[Kartik_Resume.pdf]` or `[12Th Marksheet.pdf]`. Place these naturally at the end of sections or items.
+4. **Citations as Source Pills**: Cite your sources inline using the exact source file name in brackets, e.g., `[Samragyi_Resume.pdf]` or `[12Th Marksheet.pdf]`. Place these naturally at the end of sections or items.
 5. **Strict Grounding**: Only state facts supported by the provided context. Do not hallucinate or guess.
 
 ## MATHEMATICAL CALCULATIONS

@@ -3,7 +3,7 @@ name: ✨ Feature Request
 about: Suggest an idea or improvement for the project
 title: '[FEATURE] '
 labels: enhancement
-assignees: kartikbhardwaj1111
+assignees: samragyi22
 ---
 
 ## ✨ Feature Summary

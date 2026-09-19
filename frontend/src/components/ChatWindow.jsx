@@ -28,7 +28,7 @@ const PROMPT_SUGGESTIONS = [
   "Calculate my total percentage",
   "Which subject do I need to improve the most?",
   "Show a summary of my uploaded document",
-  "What is the roll number of Kartik Bhardwaj?",
+  "What is the roll number of Samragyi Sharma?",
   "Who issued this certificate?",
   "Calculate my average grade score",
   "Show top 5 records from database",
